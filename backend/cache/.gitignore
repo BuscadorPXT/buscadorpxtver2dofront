@@ -1,0 +1,6 @@
+# Ignorar todos os arquivos de payload gerados
+*.json
+*.encrypted
+
+# Manter o diretório
+!.gitkeep

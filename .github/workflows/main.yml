@@ -1,0 +1,54 @@
+name: Deploy monorepo to CapRover
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy-frontend:
+    name: Deploy Frontend
+    runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.message, '[frontend]') || contains(github.event.head_commit.message, 'deploy')
+    steps:
+      - uses: actions/checkout@v3
+  
+      - name: Install CapRover CLI
+        run: npm install -g caprover
+  
+      - name: Compress frontend for deploy
+        run: |
+          cd frontend
+          tar -czf ../frontend.tar.gz .
+  
+      - name: Deploy to CapRover (via tar)
+        run: |
+          caprover deploy \
+            --caproverUrl https://captain.dev.buscadorpxt.com.br \
+            --appToken 0088aadcf1e8416ab7740e69058369b2b4b1edd427ad83b839f41d684365583e \
+            --appName buscador-frontend \
+            --tarFile frontend.tar.gz
+
+  deploy-backend:
+    name: Deploy Backend
+    runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.message, '[backend]') || contains(github.event.head_commit.message, 'deploy')
+    steps:
+      - uses: actions/checkout@v3
+  
+      - name: Install CapRover CLI
+        run: npm install -g caprover
+  
+      - name: Compress backend for deploy
+        run: |
+          cd backend
+          tar -czf ../backend.tar.gz .
+  
+      - name: Deploy to CapRover (via tar)
+        run: |
+          caprover deploy \
+            --caproverUrl https://captain.dev.buscadorpxt.com.br \
+            --appToken a0b551f34d5641237d1ee6c82e4ee475d8dae1781274f20f08248013511bcb21 \
+            --appName buscador-backend \
+            --tarFile backend.tar.gz
+

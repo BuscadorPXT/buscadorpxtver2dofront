@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=postgres
+      - DB_DATABASE=pxt
+      - JWT_SECRET=your-secret-key-change-in-production
+      - ENCRYPTION_KEY=your-32-char-encryption-key-here
+      - ENABLE_ENCRYPTION=false
+      - CACHE_REGENERATION_INTERVAL_MINUTES=5
+      - CACHE_DIRECTORY=/app/cache
+      - SYNC_ALL_DATES=false
+    volumes:
+      # Volume persistente para cache de payloads
+      - cache-data:/app/cache
+    depends_on:
+      - postgres
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=pxt
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+volumes:
+  # Volume para persistir dados do PostgreSQL
+  postgres-data:
+  # Volume para persistir cache de payloads
+  cache-data:
+
+networks:
+  app-network:
+    driver: bridge
