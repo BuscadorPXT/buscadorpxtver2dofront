@@ -50,6 +50,9 @@ export class Plan {
   @Column({ type: 'boolean', default: false })
   hideSupplier: boolean;
 
+  @Column({ name: 'is_test_plan', type: 'boolean', default: false })
+  isTestPlan: boolean;
+
   @CreateDateColumn()
   createdAt: Date;
 

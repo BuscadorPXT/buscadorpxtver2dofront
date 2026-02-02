@@ -21,6 +21,7 @@ export enum WhatsAppMessageType {
   SUBSCRIPTION_EXPIRED = 'subscription_expired',
   TESTER_EXPIRED = 'tester_expired',
   WELCOME_REGISTRATION = 'welcome_registration',
+  TEST_NOTIFICATION = 'test_notification',
 }
 
 export enum WhatsAppLogStatus {

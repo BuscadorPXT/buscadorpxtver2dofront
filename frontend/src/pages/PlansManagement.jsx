@@ -44,6 +44,7 @@ const PlansManagement = () => {
     maxConcurrentIps: '',
     disableSupplierContact: false,
     hideSupplier: false,
+    isTestPlan: false,
   });
 
   useEffect(() => {
@@ -79,6 +80,7 @@ const PlansManagement = () => {
         maxConcurrentIps: plan.maxConcurrentIps || '',
         disableSupplierContact: plan.disableSupplierContact || false,
         hideSupplier: plan.hideSupplier || false,
+        isTestPlan: plan.isTestPlan || false,
       });
     } else {
       setEditingPlan(null);
@@ -95,6 +97,7 @@ const PlansManagement = () => {
         maxConcurrentIps: '',
         disableSupplierContact: false,
         hideSupplier: false,
+        isTestPlan: false,
       });
     }
     setModalOpen(true);
@@ -467,6 +470,27 @@ const PlansManagement = () => {
                   </Label>
                   <p className="text-xs text-muted-foreground">
                     O nome e região do fornecedor ficam embaçados e o contato desabilitado
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-3">
+                <Checkbox
+                  id="isTestPlan"
+                  checked={formData.isTestPlan}
+                  onCheckedChange={(checked) => 
+                    setFormData({ ...formData, isTestPlan: checked })
+                  }
+                />
+                <div className="space-y-1">
+                  <Label 
+                    htmlFor="isTestPlan" 
+                    className="cursor-pointer font-medium"
+                  >
+                    Plano de Teste
+                  </Label>
+                  <p className="text-xs text-muted-foreground">
+                    Ativa mensagens automáticas de teste (6h antes, 1h antes e pós-teste)
                   </p>
                 </div>
               </div>

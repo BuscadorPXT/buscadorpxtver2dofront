@@ -34,6 +34,8 @@ import { UploadModule } from './upload/upload.module';
 import { SupplierClicksModule } from './supplier-clicks/supplier-clicks.module';
 import { Partner } from './partners/entities/partner.entity';
 import { SupplierClick } from './supplier-clicks/entities/supplier-click.entity';
+import { TestNotificationsModule } from './test-notifications/test-notifications.module';
+import { TestMessageLog } from './test-notifications/entities/test-message-log.entity';
 
 @Module({
   imports: [
@@ -49,7 +51,7 @@ import { SupplierClick } from './supplier-clicks/entities/supplier-click.entity'
       username: process.env.DB_USERNAME || 'postgres',
       password: process.env.DB_PASSWORD || 'postgres',
       database: process.env.DB_DATABASE || 'pxt',
-      entities: [User, Product, Supplier, Subscription, Plan, Notification, WhatsAppLog, SystemSettings, UserSession, PageView, LocationStats, PageStats, Partner, SupplierClick],
+      entities: [User, Product, Supplier, Subscription, Plan, Notification, WhatsAppLog, SystemSettings, UserSession, PageView, LocationStats, PageStats, Partner, SupplierClick, TestMessageLog],
       synchronize: false,
       logging: false,
     }),
@@ -69,6 +71,7 @@ import { SupplierClick } from './supplier-clicks/entities/supplier-click.entity'
     PartnersModule,
     UploadModule,
     SupplierClicksModule,
+    TestNotificationsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
