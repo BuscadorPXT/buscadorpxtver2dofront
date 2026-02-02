@@ -243,22 +243,24 @@ const Products = () => {
   };
 
   const handleWhatsAppClick = async (product) => {
-    try {
-      await api.post('/supplier-clicks/register', {
-        supplierId: product.supplier?.id,
-        productId: product.id,
-        sessionInfo: {
-          productName: product.name,
-          productCode: product.code,
-          price: product.price,
-          timestamp: new Date().toISOString(),
-        },
-      });
-    } catch (error) {
-      console.error('Erro ao registrar clique:', error);
-    }
+    const whatsappUrl = getWhatsAppUrl(product);
     
-    window.open(getWhatsAppUrl(product), '_blank', 'noopener,noreferrer');
+    // Registrar clique de forma assíncrona sem bloquear
+    api.post('/supplier-clicks/register', {
+      supplierId: product.supplier?.id,
+      productId: product.id,
+      sessionInfo: {
+        productName: product.name,
+        productCode: product.code,
+        price: product.price,
+        timestamp: new Date().toISOString(),
+      },
+    }).catch(error => {
+      console.error('Erro ao registrar clique:', error);
+    });
+    
+    // Abrir WhatsApp imediatamente sem popup
+    window.location.href = whatsappUrl;
   };
 
   const isSupplierContactDisabled = () => {
