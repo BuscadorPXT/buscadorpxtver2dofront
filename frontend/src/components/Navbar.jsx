@@ -13,7 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuLabel
 } from '@/components/ui/dropdown-menu';
-import { User, LogOut, Settings, Menu, X, Home, Package, Shield, Moon, Sun, CreditCard, Layers, Receipt, Bell, Building2, Smartphone, ChevronDown, Users, BarChart3 } from 'lucide-react';
+import { User, LogOut, Settings, Menu, X, Home, Package, Shield, Moon, Sun, CreditCard, Layers, Receipt, Bell, Building2, Smartphone, ChevronDown, Users, BarChart3, TrendingUp } from 'lucide-react';
 import HoursDisplay from './HoursDisplay';
 import NotificationBell from './NotificationBell';
 
@@ -118,6 +118,13 @@ const Navbar = () => {
                             <Link to="/admin/partners" className="flex items-center gap-2">
                               <Users className="h-4 w-4" />
                               Parceiros
+                            </Link>
+                          </DropdownMenuItem>
+                          
+                          <DropdownMenuItem asChild className="hover:bg-white/10 cursor-pointer">
+                            <Link to="/admin/supplier-analytics" className="flex items-center gap-2">
+                              <TrendingUp className="h-4 w-4" />
+                              Analytics Fornecedores
                             </Link>
                           </DropdownMenuItem>
                           

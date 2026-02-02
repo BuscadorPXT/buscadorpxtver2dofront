@@ -13,6 +13,7 @@ import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import AdminPanel from './pages/AdminPanel';
 import AdminPartners from './pages/AdminPartners';
+import AdminSupplierAnalytics from './pages/AdminSupplierAnalytics';
 import Suppliers from './pages/Suppliers';
 import Subscriptions from './pages/Subscriptions';
 import PlansManagement from './pages/PlansManagement';
@@ -57,6 +58,11 @@ function RouterContent() {
           <Route path="/admin/partners" element={
             <ProtectedRoute>
               <AdminPartners />
+            </ProtectedRoute>
+          } />
+          <Route path="/admin/supplier-analytics" element={
+            <ProtectedRoute>
+              <AdminSupplierAnalytics />
             </ProtectedRoute>
           } />
           <Route path="/suppliers" element={

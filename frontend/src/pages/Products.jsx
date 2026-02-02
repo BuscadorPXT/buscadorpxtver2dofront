@@ -242,12 +242,39 @@ const Products = () => {
     return `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
   };
 
+  const handleWhatsAppClick = async (product) => {
+    try {
+      await api.post('/supplier-clicks/register', {
+        supplierId: product.supplier?.id,
+        productId: product.id,
+        sessionInfo: {
+          productName: product.name,
+          productCode: product.code,
+          price: product.price,
+          timestamp: new Date().toISOString(),
+        },
+      });
+    } catch (error) {
+      console.error('Erro ao registrar clique:', error);
+    }
+    
+    window.open(getWhatsAppUrl(product), '_blank', 'noopener,noreferrer');
+  };
+
   const isSupplierContactDisabled = () => {
-    return user?.plan?.disableSupplierContact || user?.plan?.hideSupplier || false;
+    const disabled = user?.plan?.disableSupplierContact === true || user?.plan?.hideSupplier === true;
+    console.log('isSupplierContactDisabled:', {
+      hasUser: !!user,
+      hasPlan: !!user?.plan,
+      disableSupplierContact: user?.plan?.disableSupplierContact,
+      hideSupplier: user?.plan?.hideSupplier,
+      result: disabled
+    });
+    return disabled;
   };
 
   const isSupplierHidden = () => {
-    return user?.plan?.hideSupplier || false;
+    return user?.plan?.hideSupplier === true;
   };
 
   useEffect(() => {
@@ -1473,20 +1500,18 @@ const Products = () => {
                                         <div className="flex flex-col items-center gap-2">
                                           <div className="flex flex-col items-center text-center">
                                             <div className="flex items-center gap-1">
-                                              <a
-                                                href={isToday(selectedDate) && !isSupplierContactDisabled() ? getWhatsAppUrl(product) : '#'}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
+                                              <button
+                                                onClick={() => {
+                                                  if (product.supplier?.whatsappNumber && isToday(selectedDate) && !isSupplierContactDisabled()) {
+                                                    handleWhatsAppClick(product);
+                                                  }
+                                                }}
                                                 className={`text-sm font-medium transition-colors touch-manipulation select-none ${
                                                   product.supplier?.whatsappNumber && isToday(selectedDate) && !isSupplierContactDisabled()
                                                     ? 'text-green-600 hover:text-green-700 hover:underline cursor-pointer'
                                                     : 'text-gray-400 cursor-default'
                                                   }`}
-                                                onClick={(e) => {
-                                                  if (!product.supplier?.whatsappNumber || !isToday(selectedDate) || isSupplierContactDisabled()) {
-                                                    e.preventDefault();
-                                                  }
-                                                }}
+                                                disabled={!product.supplier?.whatsappNumber || !isToday(selectedDate) || isSupplierContactDisabled()}
                                                 title={
                                                   isSupplierContactDisabled() 
                                                     ? 'Contato desabilitado pelo seu plano' 
@@ -1496,18 +1521,16 @@ const Products = () => {
                                                 }
                                               >
                                                 {product.supplier?.name || 'N/A'}
-                                              </a>
+                                              </button>
                                               {product.supplier?.whatsappNumber && isToday(selectedDate) && !isSupplierContactDisabled() && (
-                                                <a
-                                                  href={getWhatsAppUrl(product)}
-                                                  target="_blank"
-                                                  rel="noopener noreferrer"
+                                                <button
+                                                  onClick={() => handleWhatsAppClick(product)}
                                                 >
                                                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="text-green-600 cursor-pointer hover:text-green-700">
                                                     <path d="M17.472 14.382C17.233 14.262 15.963 13.635 15.754 13.545C15.545 13.456 15.395 13.411 15.244 13.65C15.094 13.889 14.616 14.485 14.495 14.635C14.375 14.785 14.254 14.802 14.015 14.682C13.776 14.562 12.985 14.308 12.042 13.465C11.313 12.808 10.829 12.005 10.708 11.766C10.588 11.527 10.695 11.414 10.815 11.295C10.924 11.186 11.054 11.015 11.174 10.895C11.294 10.775 11.339 10.685 11.429 10.535C11.518 10.385 11.474 10.265 11.414 10.145C11.354 10.025 10.874 8.755 10.695 8.275C10.521 7.809 10.342 7.869 10.207 7.862C10.078 7.855 9.928 7.854 9.778 7.854C9.628 7.854 9.389 7.914 9.18 8.154C8.971 8.393 8.314 9.02 8.314 10.29C8.314 11.56 9.21 12.79 9.33 12.94C9.45 13.09 10.869 15.29 13.109 16.43C13.649 16.68 14.069 16.83 14.399 16.94C14.939 17.11 15.429 17.09 15.819 17.03C16.259 16.96 17.289 16.41 17.519 15.8C17.749 15.19 17.749 14.67 17.689 14.57C17.629 14.47 17.479 14.41 17.24 14.29L17.472 14.382Z" fill="currentColor"></path>
                                                     <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.477 2 12C2 13.89 2.525 15.66 3.438 17.168L2.546 20.2C2.491 20.365 2.495 20.544 2.557 20.706C2.619 20.868 2.736 21.002 2.888 21.082C3.04 21.162 3.217 21.183 3.383 21.141L6.832 20.562C8.34 21.475 10.11 22 12 22C17.523 22 22 17.523 22 12C22 6.477 17.523 2 12 2ZM12 4C16.411 4 20 7.589 20 12C20 16.411 16.411 20 12 20C10.33 20 8.773 19.516 7.455 18.686L7.257 18.562L4.697 19.062L5.438 17.257L5.314 17.059C4.484 15.741 4 14.184 4 12.514C4 7.589 7.589 4 12 4Z" fill="currentColor"></path>
                                                   </svg>
-                                                </a>
+                                                </button>
                                               )}
                                             </div>
                                             <span className="text-xs text-muted-foreground mt-1">{product.supplier?.address || 'N/A'}</span>
@@ -1623,20 +1646,18 @@ const Products = () => {
                                     {!isSupplierHidden() && (
                                       <div className="flex items-center justify-between py-0.5 sm:py-1">
                                         <span className="text-xs sm:text-sm text-muted-foreground">Fornecedor:</span>
-                                        <a
-                                          href={isToday(selectedDate) && !isSupplierContactDisabled() ? getWhatsAppUrl(product) : '#'}
-                                          target="_blank"
-                                          rel="noopener noreferrer"
+                                        <button
+                                          onClick={() => {
+                                            if (product.supplier?.whatsappNumber && isToday(selectedDate) && !isSupplierContactDisabled()) {
+                                              handleWhatsAppClick(product);
+                                            }
+                                          }}
                                           className={`text-xs sm:text-sm font-medium truncate max-w-[150px] ${
                                             product.supplier?.whatsappNumber && isToday(selectedDate) && !isSupplierContactDisabled()
                                               ? 'text-green-600 hover:text-green-700 hover:underline cursor-pointer'
                                               : 'text-gray-700 dark:text-gray-300 cursor-default'
                                             }`}
-                                          onClick={(e) => {
-                                            if (!product.supplier?.whatsappNumber || !isToday(selectedDate) || isSupplierContactDisabled()) {
-                                              e.preventDefault();
-                                            }
-                                          }}
+                                          disabled={!product.supplier?.whatsappNumber || !isToday(selectedDate) || isSupplierContactDisabled()}
                                           title={
                                             isSupplierContactDisabled() 
                                               ? 'Contato desabilitado pelo seu plano' 
@@ -1646,7 +1667,7 @@ const Products = () => {
                                           }
                                         >
                                           {product.supplier?.name || 'N/A'}
-                                        </a>
+                                        </button>
                                       </div>
                                     )}
                                   </div>
@@ -1654,17 +1675,15 @@ const Products = () => {
                                     <div className="bg-muted/30 px-3 sm:px-4 py-2 sm:py-3 border-t border-border/30">
                                       <div className="space-y-1.5 sm:space-y-2">
                                         {product.supplier?.whatsappNumber && isToday(selectedDate) && !isSupplierContactDisabled() && (
-                                          <a
-                                            href={getWhatsAppUrl(product)}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
+                                          <button
+                                            onClick={() => handleWhatsAppClick(product)}
                                             className="inline-flex items-center gap-1.5 sm:gap-2 whitespace-nowrap rounded-md text-xs sm:text-sm ring-offset-background transition-smooth focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 btn-enhanced h-9 sm:h-10 px-3 sm:px-4 py-2 dark:bg-green-900/50 dark:hover:bg-green-800/50 dark:text-green-400 border-green-300 dark:border-green-700 transition-colors touch-manipulation select-none w-full justify-center bg-green-600 hover:bg-green-700 text-white font-medium"
                                           >
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-message-circle h-3.5 w-3.5 sm:h-4 sm:w-4">
                                               <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path>
                                             </svg>
                                             WhatsApp
-                                          </a>
+                                          </button>
                                         )}
                                         {product.supplier?.whatsappNumber && isToday(selectedDate) && isSupplierContactDisabled() && (
                                           <div className="inline-flex items-center gap-1.5 sm:gap-2 whitespace-nowrap rounded-md text-xs sm:text-sm h-9 sm:h-10 px-3 sm:px-4 py-2 w-full justify-center bg-gray-400 text-white font-medium cursor-not-allowed opacity-60">

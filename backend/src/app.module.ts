@@ -31,7 +31,9 @@ import { SettingsModule } from './settings/settings.module';
 import { SessionsModule } from './sessions/sessions.module';
 import { PartnersModule } from './partners/partners.module';
 import { UploadModule } from './upload/upload.module';
+import { SupplierClicksModule } from './supplier-clicks/supplier-clicks.module';
 import { Partner } from './partners/entities/partner.entity';
+import { SupplierClick } from './supplier-clicks/entities/supplier-click.entity';
 
 @Module({
   imports: [
@@ -47,7 +49,7 @@ import { Partner } from './partners/entities/partner.entity';
       username: process.env.DB_USERNAME || 'postgres',
       password: process.env.DB_PASSWORD || 'postgres',
       database: process.env.DB_DATABASE || 'pxt',
-      entities: [User, Product, Supplier, Subscription, Plan, Notification, WhatsAppLog, SystemSettings, UserSession, PageView, LocationStats, PageStats, Partner],
+      entities: [User, Product, Supplier, Subscription, Plan, Notification, WhatsAppLog, SystemSettings, UserSession, PageView, LocationStats, PageStats, Partner, SupplierClick],
       synchronize: false,
       logging: false,
     }),
@@ -66,6 +68,7 @@ import { Partner } from './partners/entities/partner.entity';
     SessionsModule,
     PartnersModule,
     UploadModule,
+    SupplierClicksModule,
   ],
   controllers: [AppController],
   providers: [AppService],
