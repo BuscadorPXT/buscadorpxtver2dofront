@@ -395,7 +395,7 @@ const AdminPartners = () => {
                 <div className="flex-1">
                   <Input
                     type="file"
-                    accept="image/jpeg,image/jpg,image/png,image/webp"
+                    accept="image/jpeg,image/jpg,image/png,image/webp,image/gif"
                     onChange={handleFileSelect}
                     disabled={uploadingImage}
                     className="cursor-pointer"
@@ -403,7 +403,7 @@ const AdminPartners = () => {
                 </div>
               </div>
               <p className="text-xs text-gray-500">
-                Formatos: JPG, PNG, WebP (máx. 5MB). Upload será feito ao salvar.
+                Formatos: JPG, PNG, WebP, GIF (máx. 5MB). Upload será feito ao salvar.
               </p>
               
               {uploadingImage && (
