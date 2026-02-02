@@ -55,15 +55,17 @@ const PartnerBanner = () => {
     <div className="w-full mb-6">
       <Card className="overflow-hidden">
         <div className="relative group">
-          {/* Mobile: altura fixa com object-contain para não cortar */}
+          {/* Mobile: altura máxima de 100px */}
           <div
             onClick={() => handleBannerClick(currentPartner.redirectUrl)}
-            className="sm:hidden cursor-pointer relative w-full overflow-hidden bg-white h-[100px]"
+            className="sm:hidden cursor-pointer relative w-full overflow-hidden bg-white"
+            style={{ maxHeight: '100px' }}
           >
             <img
               src={currentPartner.imageUrl}
               alt={currentPartner.name}
               className="w-full h-full object-contain object-center transition-transform duration-300 group-hover:scale-[1.02]"
+              style={{ maxHeight: '100px' }}
             />
             
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4">
@@ -74,20 +76,17 @@ const PartnerBanner = () => {
             </div>
           </div>
 
-          {/* Desktop: proporção dinâmica com object-cover */}
+          {/* Desktop: altura máxima de 100px */}
           <div
             onClick={() => handleBannerClick(currentPartner.redirectUrl)}
             className="hidden sm:block cursor-pointer relative w-full overflow-hidden bg-white"
-            style={{ 
-              aspectRatio: '8.27 / 1',
-              minHeight: '80px',
-              maxHeight: '200px'
-            }}
+            style={{ maxHeight: '100px' }}
           >
             <img
               src={currentPartner.imageUrl}
               alt={currentPartner.name}
-              className="w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-[1.02]"
+              className="w-full h-full object-contain object-center transition-transform duration-300 group-hover:scale-[1.02]"
+              style={{ maxHeight: '100px' }}
             />
             
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4">
