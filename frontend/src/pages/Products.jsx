@@ -1509,9 +1509,8 @@ const Products = () => {
                                                 className={`text-sm font-medium transition-colors touch-manipulation select-none ${
                                                   product.supplier?.whatsappNumber && isToday(selectedDate) && !isSupplierContactDisabled()
                                                     ? 'text-green-600 hover:text-green-700 hover:underline cursor-pointer'
-                                                    : 'text-gray-400 cursor-default'
+                                                    : 'text-gray-400 cursor-default pointer-events-none'
                                                   }`}
-                                                disabled={!product.supplier?.whatsappNumber || !isToday(selectedDate) || isSupplierContactDisabled()}
                                                 title={
                                                   isSupplierContactDisabled() 
                                                     ? 'Contato desabilitado pelo seu plano' 
@@ -1655,9 +1654,8 @@ const Products = () => {
                                           className={`text-xs sm:text-sm font-medium truncate max-w-[150px] ${
                                             product.supplier?.whatsappNumber && isToday(selectedDate) && !isSupplierContactDisabled()
                                               ? 'text-green-600 hover:text-green-700 hover:underline cursor-pointer'
-                                              : 'text-gray-700 dark:text-gray-300 cursor-default'
+                                              : 'text-gray-700 dark:text-gray-300 cursor-default pointer-events-none'
                                             }`}
-                                          disabled={!product.supplier?.whatsappNumber || !isToday(selectedDate) || isSupplierContactDisabled()}
                                           title={
                                             isSupplierContactDisabled() 
                                               ? 'Contato desabilitado pelo seu plano' 
