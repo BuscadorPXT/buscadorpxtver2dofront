@@ -112,6 +112,16 @@ const Navbar = () => {
                           </DropdownMenuItem>
                           
                           <DropdownMenuSeparator className="bg-gray-800" />
+                          <DropdownMenuLabel className="text-gray-400 text-xs">Marketing</DropdownMenuLabel>
+                          
+                          <DropdownMenuItem asChild className="hover:bg-white/10 cursor-pointer">
+                            <Link to="/admin/partners" className="flex items-center gap-2">
+                              <Users className="h-4 w-4" />
+                              Parceiros
+                            </Link>
+                          </DropdownMenuItem>
+                          
+                          <DropdownMenuSeparator className="bg-gray-800" />
                           <DropdownMenuLabel className="text-gray-400 text-xs">Sistema</DropdownMenuLabel>
                           
                           <DropdownMenuItem asChild className="hover:bg-white/10 cursor-pointer">

@@ -12,6 +12,7 @@ import Register from './pages/Register';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import AdminPanel from './pages/AdminPanel';
+import AdminPartners from './pages/AdminPartners';
 import Suppliers from './pages/Suppliers';
 import Subscriptions from './pages/Subscriptions';
 import PlansManagement from './pages/PlansManagement';
@@ -53,6 +54,11 @@ function RouterContent() {
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/admin" element={<AdminPanel />} />
+          <Route path="/admin/partners" element={
+            <ProtectedRoute>
+              <AdminPartners />
+            </ProtectedRoute>
+          } />
           <Route path="/suppliers" element={
             <ProtectedRoute>
               <Suppliers />

@@ -56,6 +56,17 @@ const Settings = () => {
   const [templatesSaving, setTemplatesSaving] = useState(false);
   const [welcomeTemplate, setWelcomeTemplate] = useState('');
 
+  const [r2Loading, setR2Loading] = useState(false);
+  const [showR2AccessKey, setShowR2AccessKey] = useState(false);
+  const [showR2SecretKey, setShowR2SecretKey] = useState(false);
+  const [r2FormData, setR2FormData] = useState({
+    r2AccountId: '',
+    r2AccessKeyId: '',
+    r2SecretAccessKey: '',
+    r2BucketName: '',
+    r2PublicUrl: ''
+  });
+
   useEffect(() => {
 
     if (authLoading) {
@@ -72,6 +83,7 @@ const Settings = () => {
     loadSettings();
     loadMailjetSettings();
     loadTemplates();
+    loadR2Settings();
   }, [isAdmin, authLoading, navigate]);
 
   const loadSettings = async () => {
@@ -127,6 +139,39 @@ const Settings = () => {
       toast.error(error.response?.data?.message || 'Erro ao salvar template');
     } finally {
       setTemplatesSaving(false);
+    }
+  };
+
+  const loadR2Settings = async () => {
+    try {
+      const response = await api.get('/settings/r2');
+      setR2FormData({
+        r2AccountId: response.data.r2AccountId || '',
+        r2AccessKeyId: response.data.r2AccessKeyId || '',
+        r2SecretAccessKey: response.data.r2SecretAccessKey || '',
+        r2BucketName: response.data.r2BucketName || '',
+        r2PublicUrl: response.data.r2PublicUrl || '',
+      });
+    } catch (error) {
+      console.error('Erro ao carregar configurações R2:', error);
+    }
+  };
+
+  const handleSaveR2Settings = async () => {
+    if (!r2FormData.r2AccountId || !r2FormData.r2AccessKeyId || !r2FormData.r2SecretAccessKey || !r2FormData.r2BucketName) {
+      toast.error('Preencha todos os campos obrigatórios');
+      return;
+    }
+
+    setR2Loading(true);
+    try {
+      await api.put('/settings/r2', r2FormData);
+      toast.success('Configurações R2 salvas com sucesso!');
+    } catch (error) {
+      console.error('Erro ao salvar configurações R2:', error);
+      toast.error('Erro ao salvar configurações');
+    } finally {
+      setR2Loading(false);
     }
   };
 
@@ -577,8 +622,118 @@ const Settings = () => {
 
         <Card className="mb-6">
           <CardHeader>
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-purple-500/10 rounded-lg">
+            <div className="flex items-center gap-3">              <div className="p-2 bg-orange-500/10 rounded-lg">
+                <FileText className="h-6 w-6 text-orange-600 dark:text-orange-400" />
+              </div>
+              <div>
+                <CardTitle>Configuração Cloudflare R2</CardTitle>
+                <CardDescription>
+                  Configure o armazenamento de imagens usando Cloudflare R2
+                </CardDescription>
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="r2AccountId">Account ID</Label>
+                <Input
+                  id="r2AccountId"
+                  placeholder="Cloudflare Account ID"
+                  value={r2FormData.r2AccountId}
+                  onChange={(e) => setR2FormData({ ...r2FormData, r2AccountId: e.target.value })}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="r2AccessKeyId">Access Key ID</Label>
+                <div className="relative">
+                  <Input
+                    id="r2AccessKeyId"
+                    type={showR2AccessKey ? "text" : "password"}
+                    placeholder="R2 S3 Access Key ID"
+                    value={r2FormData.r2AccessKeyId}
+                    onChange={(e) => setR2FormData({ ...r2FormData, r2AccessKeyId: e.target.value })}
+                    className="pr-10"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowR2AccessKey(!showR2AccessKey)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                  >
+                    {showR2AccessKey ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  </button>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="r2SecretAccessKey">Secret Access Key</Label>
+                <div className="relative">
+                  <Input
+                    id="r2SecretAccessKey"
+                    type={showR2SecretKey ? "text" : "password"}
+                    placeholder="R2 S3 Secret Access Key"
+                    value={r2FormData.r2SecretAccessKey}
+                    onChange={(e) => setR2FormData({ ...r2FormData, r2SecretAccessKey: e.target.value })}
+                    className="pr-10"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowR2SecretKey(!showR2SecretKey)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                  >
+                    {showR2SecretKey ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  </button>
+                </div>
+                <p className="text-xs text-gray-500">
+                  Credenciais S3 geradas em R2 > Manage R2 API Tokens
+                </p>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="r2BucketName">Bucket Name</Label>
+                <Input
+                  id="r2BucketName"
+                  placeholder="Nome do bucket R2"
+                  value={r2FormData.r2BucketName}
+                  onChange={(e) => setR2FormData({ ...r2FormData, r2BucketName: e.target.value })}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="r2PublicUrl">Public URL (opcional)</Label>
+                <Input
+                  id="r2PublicUrl"
+                  placeholder="https://seu-dominio.com (deixe vazio para usar URL padrão)"
+                  value={r2FormData.r2PublicUrl}
+                  onChange={(e) => setR2FormData({ ...r2FormData, r2PublicUrl: e.target.value })}
+                />
+                <p className="text-xs text-gray-500">
+                  URL customizada se você configurou um domínio próprio para o R2
+                </p>
+              </div>
+            </div>
+
+            <div className="flex gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
+              <Button
+                onClick={handleSaveR2Settings}
+                disabled={r2Loading}
+                className="flex items-center gap-2"
+              >
+                {r2Loading ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <Save className="h-4 w-4" />
+                )}
+                Salvar Configurações
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="mb-6">
+          <CardHeader>
+            <div className="flex items-center gap-3">              <div className="p-2 bg-purple-500/10 rounded-lg">
                 <FileText className="h-6 w-6 text-purple-600 dark:text-purple-400" />
               </div>
               <div>

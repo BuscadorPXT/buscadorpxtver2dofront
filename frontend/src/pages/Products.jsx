@@ -9,6 +9,7 @@ import MultiSelectFilter from '@/components/MultiSelectFilter';
 import SuppliersModal from '@/components/SuppliersModal';
 import SearchAutocomplete from '@/components/SearchAutocomplete';
 import DateFilter from '@/components/DateFilter';
+import PartnerBanner from '@/components/PartnerBanner';
 import { getOfficialColors, categorizeColors, formatColorName, normalizeColorForDB } from '@/data/productColors';
 import encryptionService from '@/services/encryption.service';
 import useDollarRate from '@/hooks/useDollarRate';
@@ -1156,6 +1157,8 @@ const Products = () => {
               </div>
             </div>
           </div>
+
+          <PartnerBanner />
 
           <div className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm shadow-lg rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
 

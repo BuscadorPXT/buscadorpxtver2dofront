@@ -29,6 +29,9 @@ import { PlansModule } from './plans/plans.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { SettingsModule } from './settings/settings.module';
 import { SessionsModule } from './sessions/sessions.module';
+import { PartnersModule } from './partners/partners.module';
+import { UploadModule } from './upload/upload.module';
+import { Partner } from './partners/entities/partner.entity';
 
 @Module({
   imports: [
@@ -44,7 +47,7 @@ import { SessionsModule } from './sessions/sessions.module';
       username: process.env.DB_USERNAME || 'postgres',
       password: process.env.DB_PASSWORD || 'postgres',
       database: process.env.DB_DATABASE || 'pxt',
-      entities: [User, Product, Supplier, Subscription, Plan, Notification, WhatsAppLog, SystemSettings, UserSession, PageView, LocationStats, PageStats],
+      entities: [User, Product, Supplier, Subscription, Plan, Notification, WhatsAppLog, SystemSettings, UserSession, PageView, LocationStats, PageStats, Partner],
       synchronize: false,
       logging: false,
     }),
@@ -61,6 +64,8 @@ import { SessionsModule } from './sessions/sessions.module';
     NotificationsModule,
     SettingsModule,
     SessionsModule,
+    PartnersModule,
+    UploadModule,
   ],
   controllers: [AppController],
   providers: [AppService],

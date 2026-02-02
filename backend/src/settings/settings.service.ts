@@ -121,6 +121,53 @@ export class SettingsService {
     return { welcomeMessage };
   }
 
+  async getR2Settings(): Promise<{
+    r2AccountId: string;
+    r2AccessKeyId: string;
+    r2SecretAccessKey: string;
+    r2BucketName: string;
+    r2PublicUrl: string;
+  }> {
+    const settings = await this.settingsRepository.findOne({ 
+      where: [{ id: 1 }, { key: 'system' }] 
+    });
+    
+    return {
+      r2AccountId: settings?.r2AccountId || '',
+      r2AccessKeyId: settings?.r2AccessKeyId || '',
+      r2SecretAccessKey: settings?.r2SecretAccessKey || '',
+      r2BucketName: settings?.r2BucketName || '',
+      r2PublicUrl: settings?.r2PublicUrl || '',
+    };
+  }
+
+  async updateR2Settings(
+    r2AccountId: string,
+    r2AccessKeyId: string,
+    r2SecretAccessKey: string,
+    r2BucketName: string,
+    r2PublicUrl?: string,
+  ): Promise<void> {
+    let settings = await this.settingsRepository.findOne({ 
+      where: [{ id: 1 }, { key: 'system' }] 
+    });
+    
+    if (!settings) {
+      settings = this.settingsRepository.create({
+        key: 'system',
+        value: 'system',
+      });
+    }
+
+    settings.r2AccountId = r2AccountId;
+    settings.r2AccessKeyId = r2AccessKeyId;
+    settings.r2SecretAccessKey = r2SecretAccessKey;
+    settings.r2BucketName = r2BucketName;
+    settings.r2PublicUrl = r2PublicUrl || '';
+
+    await this.settingsRepository.save(settings);
+  }
+
   private encrypt(text: string): string {
     const iv = crypto.randomBytes(16);
     const key = crypto.scryptSync(this.encryptionKey, 'salt', 32);

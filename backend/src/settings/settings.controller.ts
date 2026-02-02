@@ -94,6 +94,29 @@ export class SettingsController {
     return { message: 'Templates atualizados com sucesso' };
   }
 
+  @Get('r2')
+  async getR2Settings() {
+    return await this.settingsService.getR2Settings();
+  }
+
+  @Put('r2')
+  async updateR2Settings(@Body() dto: {
+    r2AccountId: string;
+    r2AccessKeyId: string;
+    r2SecretAccessKey: string;
+    r2BucketName: string;
+    r2PublicUrl?: string;
+  }) {
+    await this.settingsService.updateR2Settings(
+      dto.r2AccountId,
+      dto.r2AccessKeyId,
+      dto.r2SecretAccessKey,
+      dto.r2BucketName,
+      dto.r2PublicUrl,
+    );
+    return { message: 'Configurações R2 atualizadas com sucesso' };
+  }
+
   @Get(':key')
   async findByKey(@Param('key') key: string) {
     const value = await this.settingsService.findByKey(key);

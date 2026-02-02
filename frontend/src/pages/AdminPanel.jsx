@@ -9,7 +9,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Loader2, Users, CheckCircle, XCircle, Shield, Trash2, Search, Ban, Check, Smartphone, MessageCircle, Settings, Bell, BellOff } from 'lucide-react';
+import { Loader2, Users, CheckCircle, XCircle, Shield, Trash2, Search, Ban, Check, Smartphone, MessageCircle, Settings, Bell, BellOff, Image, ExternalLink, Eye, EyeOff, ArrowUpDown } from 'lucide-react';
 import OnlineUsersCard from '@/components/OnlineUsersCard';
 import SupplierPriorityManager from '@/components/SupplierPriorityManager';
 
@@ -22,10 +22,21 @@ const AdminPanel = () => {
   const [message, setMessage] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [editIpsDialog, setEditIpsDialog] = useState({ open: false, user: null, value: '' });
+  const [partners, setPartners] = useState([]);
+  const [partnerDialog, setPartnerDialog] = useState({ open: false, partner: null });
+  const [partnerFormData, setPartnerFormData] = useState({
+    name: '',
+    imageUrl: '',
+    redirectUrl: '',
+    displayOrder: 0,
+    startDate: '',
+    endDate: ''
+  });
 
   useEffect(() => {
     if (isAdmin) {
       fetchUsers();
+      fetchPartners();
     }
   }, [isAdmin]);
 
@@ -38,6 +49,109 @@ const AdminPanel = () => {
       setMessage('Erro ao carregar usuários');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchPartners = async () => {
+    try {
+      const response = await api.get('/partners');
+      setPartners(response.data);
+    } catch (error) {
+      console.error('Erro ao buscar parceiros:', error);
+    }
+  };
+
+  const handleOpenPartnerDialog = (partner = null) => {
+    if (partner) {
+      setPartnerFormData({
+        name: partner.name,
+        imageUrl: partner.imageUrl,
+        redirectUrl: partner.redirectUrl,
+        displayOrder: partner.displayOrder,
+        startDate: partner.startDate ? partner.startDate.split('T')[0] : '',
+        endDate: partner.endDate ? partner.endDate.split('T')[0] : ''
+      });
+    } else {
+      setPartnerFormData({
+        name: '',
+        imageUrl: '',
+        redirectUrl: '',
+        displayOrder: 0,
+        startDate: '',
+        endDate: ''
+      });
+    }
+    setPartnerDialog({ open: true, partner });
+  };
+
+  const handleClosePartnerDialog = () => {
+    setPartnerDialog({ open: false, partner: null });
+  };
+
+  const handlePartnerFormChange = (field, value) => {
+    setPartnerFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleSavePartner = async () => {
+    setActionLoading(prev => ({ ...prev, savePartner: true }));
+    try {
+      const data = {
+        ...partnerFormData,
+        startDate: partnerFormData.startDate || null,
+        endDate: partnerFormData.endDate || null
+      };
+
+      if (partnerDialog.partner) {
+        await api.put(`/partners/${partnerDialog.partner.id}`, data);
+        setMessage('Parceiro atualizado com sucesso!');
+      } else {
+        await api.post('/partners', data);
+        setMessage('Parceiro criado com sucesso!');
+      }
+      
+      setTimeout(() => setMessage(''), 3000);
+      handleClosePartnerDialog();
+      fetchPartners();
+    } catch (error) {
+      console.error('Erro ao salvar parceiro:', error);
+      setMessage('Erro ao salvar parceiro');
+      setTimeout(() => setMessage(''), 3000);
+    } finally {
+      setActionLoading(prev => ({ ...prev, savePartner: false }));
+    }
+  };
+
+  const handleTogglePartnerActive = async (partnerId) => {
+    setActionLoading(prev => ({ ...prev, [`partner_${partnerId}`]: true }));
+    try {
+      await api.patch(`/partners/${partnerId}/toggle`);
+      setMessage('Status do parceiro atualizado!');
+      setTimeout(() => setMessage(''), 3000);
+      fetchPartners();
+    } catch (error) {
+      console.error('Erro ao atualizar status do parceiro:', error);
+      setMessage('Erro ao atualizar status do parceiro');
+      setTimeout(() => setMessage(''), 3000);
+    } finally {
+      setActionLoading(prev => ({ ...prev, [`partner_${partnerId}`]: false }));
+    }
+  };
+
+  const handleDeletePartner = async (partnerId) => {
+    if (!confirm('Tem certeza que deseja excluir este parceiro?')) return;
+    
+    setActionLoading(prev => ({ ...prev, [`delete_partner_${partnerId}`]: true }));
+    try {
+      await api.delete(`/partners/${partnerId}`);
+      setMessage('Parceiro excluído com sucesso!');
+      setTimeout(() => setMessage(''), 3000);
+      fetchPartners();
+    } catch (error) {
+      console.error('Erro ao excluir parceiro:', error);
+      setMessage('Erro ao excluir parceiro');
+      setTimeout(() => setMessage(''), 3000);
+    } finally {
+      setActionLoading(prev => ({ ...prev, [`delete_partner_${partnerId}`]: false }));
     }
   };
 
@@ -340,7 +454,7 @@ const AdminPanel = () => {
           </CardHeader>
           <CardContent className="p-3 sm:p-4 lg:p-6">
             <Tabs defaultValue="pending" className="w-full">
-              <TabsList className="grid w-full grid-cols-2 sm:grid-cols-5 gap-1 h-auto p-1">
+              <TabsList className="grid w-full grid-cols-2 sm:grid-cols-6 gap-1 h-auto p-1">
                 <TabsTrigger value="pending" className="text-xs sm:text-sm py-2 sm:py-2.5">
                   <span className="hidden sm:inline">Pendentes</span>
                   <span className="sm:hidden">Pend.</span> ({pendingUsers.length})
@@ -360,6 +474,10 @@ const AdminPanel = () => {
                 <TabsTrigger value="suppliers" className="text-xs sm:text-sm py-2 sm:py-2.5">
                   <span className="hidden sm:inline">Fornecedores</span>
                   <span className="sm:hidden">Forn.</span>
+                </TabsTrigger>
+                <TabsTrigger value="partners" className="text-xs sm:text-sm py-2 sm:py-2.5">
+                  <span className="hidden sm:inline">Parceiros</span>
+                  <span className="sm:hidden">Parc.</span> ({partners.length})
                 </TabsTrigger>
               </TabsList>
               
@@ -819,10 +937,228 @@ const AdminPanel = () => {
               <TabsContent value="suppliers" className="mt-3 sm:mt-4">
                 <SupplierPriorityManager />
               </TabsContent>
+
+              <TabsContent value="partners" className="mt-3 sm:mt-4">
+                <div className="mb-4">
+                  <Button onClick={() => handleOpenPartnerDialog()}>
+                    <Image className="h-4 w-4 mr-2" />
+                    Adicionar Parceiro
+                  </Button>
+                </div>
+
+                {partners.length === 0 ? (
+                  <p className="text-center text-gray-500 py-8 text-sm">
+                    Nenhum parceiro cadastrado
+                  </p>
+                ) : (
+                  <div className="space-y-3">
+                    {partners.map((partner) => (
+                      <Card key={partner.id}>
+                        <CardContent className="p-4">
+                          <div className="flex flex-col sm:flex-row gap-4">
+                            <div className="w-full sm:w-32 h-32 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
+                              {partner.imageUrl ? (
+                                <img
+                                  src={partner.imageUrl}
+                                  alt={partner.name}
+                                  className="w-full h-full object-cover"
+                                />
+                              ) : (
+                                <div className="w-full h-full flex items-center justify-center text-gray-400">
+                                  <Image className="h-8 w-8" />
+                                </div>
+                              )}
+                            </div>
+
+                            <div className="flex-1">
+                              <div className="flex items-start justify-between mb-2">
+                                <div>
+                                  <h3 className="font-semibold text-lg">{partner.name}</h3>
+                                  <div className="flex items-center gap-2 mt-1">
+                                    <Badge variant={partner.isActive ? "default" : "secondary"}>
+                                      {partner.isActive ? 'Ativo' : 'Inativo'}
+                                    </Badge>
+                                    <span className="text-xs text-gray-500">
+                                      Ordem: {partner.displayOrder}
+                                    </span>
+                                  </div>
+                                </div>
+                                <div className="flex gap-2">
+                                  <Button
+                                    size="sm"
+                                    variant="outline"
+                                    onClick={() => handleOpenPartnerDialog(partner)}
+                                  >
+                                    <Settings className="h-4 w-4" />
+                                  </Button>
+                                  <Button
+                                    size="sm"
+                                    variant="outline"
+                                    onClick={() => handleTogglePartnerActive(partner.id)}
+                                    disabled={actionLoading[`partner_${partner.id}`]}
+                                  >
+                                    {actionLoading[`partner_${partner.id}`] ? (
+                                      <Loader2 className="h-4 w-4 animate-spin" />
+                                    ) : partner.isActive ? (
+                                      <EyeOff className="h-4 w-4" />
+                                    ) : (
+                                      <Eye className="h-4 w-4" />
+                                    )}
+                                  </Button>
+                                  <Button
+                                    size="sm"
+                                    variant="destructive"
+                                    onClick={() => handleDeletePartner(partner.id)}
+                                    disabled={actionLoading[`delete_partner_${partner.id}`]}
+                                  >
+                                    {actionLoading[`delete_partner_${partner.id}`] ? (
+                                      <Loader2 className="h-4 w-4 animate-spin" />
+                                    ) : (
+                                      <Trash2 className="h-4 w-4" />
+                                    )}
+                                  </Button>
+                                </div>
+                              </div>
+
+                              <div className="space-y-1 text-sm">
+                                <div className="flex items-center gap-2 text-gray-600">
+                                  <ExternalLink className="h-3 w-3" />
+                                  <a
+                                    href={partner.redirectUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="hover:underline truncate"
+                                  >
+                                    {partner.redirectUrl}
+                                  </a>
+                                </div>
+                                {(partner.startDate || partner.endDate) && (
+                                  <div className="text-xs text-gray-500">
+                                    {partner.startDate && `Início: ${new Date(partner.startDate).toLocaleDateString('pt-BR')}`}
+                                    {partner.startDate && partner.endDate && ' - '}
+                                    {partner.endDate && `Fim: ${new Date(partner.endDate).toLocaleDateString('pt-BR')}`}
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                )}
+              </TabsContent>
             </Tabs>
           </CardContent>
         </Card>
       </div>
+
+      <Dialog open={partnerDialog.open} onOpenChange={(open) => !open && handleClosePartnerDialog()}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>
+              {partnerDialog.partner ? 'Editar Parceiro' : 'Adicionar Parceiro'}
+            </DialogTitle>
+            <DialogDescription>
+              Preencha as informações do parceiro para exibição no sistema
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="partnerName">Nome do Parceiro</Label>
+              <Input
+                id="partnerName"
+                value={partnerFormData.name}
+                onChange={(e) => handlePartnerFormChange('name', e.target.value)}
+                placeholder="Nome do parceiro"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="imageUrl">URL da Imagem</Label>
+              <Input
+                id="imageUrl"
+                value={partnerFormData.imageUrl}
+                onChange={(e) => handlePartnerFormChange('imageUrl', e.target.value)}
+                placeholder="https://exemplo.com/imagem.jpg"
+              />
+              {partnerFormData.imageUrl && (
+                <div className="mt-2 w-full h-32 bg-gray-100 rounded-lg overflow-hidden">
+                  <img
+                    src={partnerFormData.imageUrl}
+                    alt="Preview"
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                    }}
+                  />
+                </div>
+              )}
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="redirectUrl">URL de Redirecionamento</Label>
+              <Input
+                id="redirectUrl"
+                value={partnerFormData.redirectUrl}
+                onChange={(e) => handlePartnerFormChange('redirectUrl', e.target.value)}
+                placeholder="https://exemplo.com ou https://wa.me/5511999999999"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="displayOrder">Ordem de Exibição</Label>
+              <Input
+                id="displayOrder"
+                type="number"
+                min="0"
+                value={partnerFormData.displayOrder}
+                onChange={(e) => handlePartnerFormChange('displayOrder', parseInt(e.target.value) || 0)}
+                placeholder="0"
+              />
+              <p className="text-xs text-muted-foreground">
+                Menor valor = maior prioridade
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="startDate">Data de Início (opcional)</Label>
+                <Input
+                  id="startDate"
+                  type="date"
+                  value={partnerFormData.startDate}
+                  onChange={(e) => handlePartnerFormChange('startDate', e.target.value)}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="endDate">Data de Fim (opcional)</Label>
+                <Input
+                  id="endDate"
+                  type="date"
+                  value={partnerFormData.endDate}
+                  onChange={(e) => handlePartnerFormChange('endDate', e.target.value)}
+                />
+              </div>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={handleClosePartnerDialog}>
+              Cancelar
+            </Button>
+            <Button
+              onClick={handleSavePartner}
+              disabled={actionLoading.savePartner || !partnerFormData.name || !partnerFormData.imageUrl || !partnerFormData.redirectUrl}
+            >
+              {actionLoading.savePartner ? (
+                <Loader2 className="h-4 w-4 animate-spin mr-2" />
+              ) : null}
+              Salvar
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       <Dialog open={editIpsDialog.open} onOpenChange={(open) => !open && handleCloseEditIps()}>
         <DialogContent>
