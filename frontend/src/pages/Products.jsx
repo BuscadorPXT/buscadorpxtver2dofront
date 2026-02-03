@@ -259,8 +259,13 @@ const Products = () => {
       console.error('Erro ao registrar clique:', error);
     });
     
-    // Abrir WhatsApp imediatamente sem popup
-    window.location.href = whatsappUrl;
+    const link = document.createElement('a');
+    link.href = whatsappUrl;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   const isSupplierContactDisabled = () => {
