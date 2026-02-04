@@ -36,19 +36,10 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./
 COPY --from=builder /app/dist ./dist
 
-# Copy migrations and migration runner
-COPY --from=builder /app/migrations ./migrations
-COPY --from=builder /app/run-migrations.js ./run-migrations.js
-
-# Entrypoint that can run the seed once (gated by env var)
-COPY docker-entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-
 COPY ./google-service-account-key.json /app/google-service-account-key.json
 ENV GOOGLE_APPLICATION_CREDENTIALS=/app/google-service-account-key.json
 
 # Default Nest port (change if you use another)
 EXPOSE 3001
 
-ENTRYPOINT ["/entrypoint.sh"]
 CMD ["node", "dist/main.js"]
