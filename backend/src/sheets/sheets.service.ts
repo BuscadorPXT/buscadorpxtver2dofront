@@ -327,7 +327,7 @@ export class SheetsService {
 
             if (result) {
               productIdsInSheet.add(result.productId);
-              this.logger.debug(`Rastreando produto ID: ${result.productId} - ${row.modelo} (aba: ${sheetDate})`);
+              // this.logger.debug(`Rastreando produto ID: ${result.productId} - ${row.modelo} (aba: ${sheetDate})`);
 
               if (result.isNew) {
                 added++;
@@ -542,7 +542,7 @@ export class SheetsService {
       }
 
       await this.productRepository.update(product.id, productData);
-      this.logger.debug(`Produto atualizado: ${row.modelo}`);
+      // this.logger.debug(`Produto atualizado: ${row.modelo}`);
       return { productId: product.id, isNew: false };
     } else {
 
