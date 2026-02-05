@@ -42,7 +42,7 @@ const AdminPanel = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await api.get('/users');
+      const response = await api.get('/users');      
       setUsers(response.data);
     } catch (error) {
       console.error('Erro ao buscar usuários:', error);
@@ -309,9 +309,16 @@ const AdminPanel = () => {
     );
   }
 
+  console.log('Usuários carregados:', users);
   const filteredUsers = users.filter(u => 
     u.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    u.email.toLowerCase().includes(searchTerm.toLowerCase())
+    u.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (u.codeId && String(u.codeId).toLowerCase().includes(searchTerm.toLowerCase()))
+  );
+
+  // Usuário encontrado por codeId exato
+  const userByCodeId = users.find(
+    u => u.codeId && String(u.codeId).toLowerCase() === searchTerm.toLowerCase()
   );
 
   const pendingUsers = filteredUsers.filter(u => !u.isApproved);
@@ -347,9 +354,32 @@ const AdminPanel = () => {
               />
             </div>
             {searchTerm && (
-              <p className="text-xs sm:text-sm text-gray-600 mt-2">
-                Encontrados: {filteredUsers.length} usuário(s)
-              </p>
+              <>
+                <p className="text-xs sm:text-sm text-gray-600 mt-2">
+                  Encontrados: {filteredUsers.length} usuário(s)
+                </p>
+                {userByCodeId && (
+                  <div className="mt-4 p-4 rounded-lg border bg-white shadow">
+                    <h2 className="text-lg font-bold mb-2">Usuário encontrado pelo código</h2>
+                    <div className="space-y-1">
+                      <div><span className="font-semibold">Nome:</span> {userByCodeId.name}</div>
+                      <div><span className="font-semibold">E-mail:</span> {userByCodeId.email}</div>
+                      {userByCodeId.phone && (
+                        <div>
+                          <span className="font-semibold">WhatsApp:</span> 
+                          <a href={`https://wa.me/55${userByCodeId.phone}`} target="_blank" rel="noopener noreferrer" className="text-green-600 hover:underline ml-1">
+                            {userByCodeId.phone.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3')}
+                          </a>
+                        </div>
+                      )}
+                      {userByCodeId.plan.name ? (
+                        <div><span className="font-semibold">Plano atual:</span> {userByCodeId.plan.name}</div>
+                      ) : <div><span className="font-semibold">Plano atual:</span> Sem plano</div>}
+                      <div><span className="font-semibold">Data de cadastro:</span> {new Date(userByCodeId.createdAt).toLocaleDateString('pt-BR')}</div>
+                    </div>
+                  </div>
+                )}
+              </>
             )}
           </CardContent>
         </Card>

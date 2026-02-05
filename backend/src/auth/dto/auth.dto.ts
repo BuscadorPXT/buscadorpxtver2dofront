@@ -30,6 +30,7 @@ export class AuthResponseDto {
     id: number;
     name: string;
     email: string;
+    codeId?: string;
     isApproved: boolean;
     isAdmin: boolean;
     plan?: {
