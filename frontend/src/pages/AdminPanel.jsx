@@ -356,11 +356,30 @@ const AdminPanel = () => {
             {searchTerm && (
               <>
                 <p className="text-xs sm:text-sm text-gray-600 mt-2">
-                  Encontrados: {filteredUsers.length} usuário(s)
+                  Encontrados: {filteredUsers.length} usuários
                 </p>
-                {userByCodeId && (
+                               
+                { filteredUsers.length === 1 ? (
                   <div className="mt-4 p-4 rounded-lg border bg-white shadow">
-                    <h2 className="text-lg font-bold mb-2">Usuário encontrado pelo código</h2>
+                    <h2 className="text-lg font-bold mb-2">Usuário encontrado</h2>
+                    <div className="space-y-1">
+                      <div><span className="font-semibold">Nome:</span> {filteredUsers[0].name}</div>
+                      <div><span className="font-semibold">E-mail:</span> {filteredUsers[0].email}</div>
+                      {filteredUsers[0].phone && (
+                        <div>
+                          <span className="font-semibold">WhatsApp:</span> 
+                          <a href={`https://wa.me/55${filteredUsers[0].phone}`} target="_blank" rel="noopener noreferrer" className="text-green-600 hover:underline ml-1">
+                            {filteredUsers[0].phone.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3')}
+                          </a>
+                        </div>
+                      )}
+                      <div><span className="font-semibold">Plano atual:</span> {filteredUsers[0]?.plan?.name ?? 'Sem plano'}</div>
+                      <div><span className="font-semibold">Data de cadastro:</span> {new Date(filteredUsers[0].createdAt).toLocaleDateString('pt-BR')}</div>
+                    </div>
+                  </div>
+                ) : userByCodeId ? (
+                  <div className="mt-4 p-4 rounded-lg border bg-white shadow">
+                    <h2 className="text-lg font-bold mb-2">Usuário encontrado por ID</h2>
                     <div className="space-y-1">
                       <div><span className="font-semibold">Nome:</span> {userByCodeId.name}</div>
                       <div><span className="font-semibold">E-mail:</span> {userByCodeId.email}</div>
@@ -372,13 +391,11 @@ const AdminPanel = () => {
                           </a>
                         </div>
                       )}
-                      {userByCodeId.plan.name ? (
-                        <div><span className="font-semibold">Plano atual:</span> {userByCodeId.plan.name}</div>
-                      ) : <div><span className="font-semibold">Plano atual:</span> Sem plano</div>}
+                      <div><span className="font-semibold">Plano atual:</span> {userByCodeId?.plan?.name ?? 'Sem plano'}</div>
                       <div><span className="font-semibold">Data de cadastro:</span> {new Date(userByCodeId.createdAt).toLocaleDateString('pt-BR')}</div>
                     </div>
                   </div>
-                )}
+                ) : null}
               </>
             )}
           </CardContent>
