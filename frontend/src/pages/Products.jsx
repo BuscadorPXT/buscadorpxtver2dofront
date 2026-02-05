@@ -267,7 +267,8 @@ const Products = () => {
     const phoneNumber = product.supplier.whatsappNumber.replace(/\D/g, '');
     const productName = `${product.name} ${product.storage || ''} ${product.color || ''}`.trim();
     const priceFormatted = formatCurrency(product.price);
-    const message = `Olá! Vi o produto no *Buscador PXT* e gostaria de saber se tem disponível: ${productName} ${priceFormatted}`;
+    const codeId = user?.codeId ? `[COD: ${user.codeId}] ` : '';
+    const message = `Olá! Vi o produto no *Buscador PXT* e gostaria de saber se tem disponível: ${codeId}${productName} ${priceFormatted}`;
 
     return `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
   };

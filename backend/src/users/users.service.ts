@@ -20,6 +20,10 @@ export class UsersService {
     return await this.userRepository.find();
   }
 
+  async findByCodeId(codeId: string){
+    return await this.userRepository.findOne({ where: { codeId } });
+  }
+
   async findById(id: number): Promise<User | null> {
     return await this.userRepository.findOne({ 
       where: { id },

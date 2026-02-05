@@ -686,7 +686,7 @@ const Settings = () => {
                   </button>
                 </div>
                 <p className="text-xs text-gray-500">
-                  Credenciais S3 geradas em R2 > Manage R2 API Tokens
+                  Credenciais S3 geradas em R2 Manage R2 API Tokens
                 </p>
               </div>
 
