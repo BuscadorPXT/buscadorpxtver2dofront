@@ -63,7 +63,7 @@ const Login = () => {
       <Card className="w-full max-w-md dark:bg-gray-800 dark:border-gray-700">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold text-center dark:text-white">Entrar</CardTitle>
-          <CardDescription className="text-center dark:text-gray-400">
+          <CardDescription className="text-center dark:text-gray-400 mb-5">
             Entre com suas credenciais para acessar o sistema
           </CardDescription>
         </CardHeader>
@@ -146,7 +146,7 @@ const Login = () => {
               </div>
             </div>
 
-            <Button type="submit" className="w-full" disabled={loading}>
+            <Button type="submit" className="w-full cursor-pointer" disabled={loading}>
               {loading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />

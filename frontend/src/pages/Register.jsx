@@ -24,7 +24,7 @@ const countries = [
 
 const Register = () => {
   const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState('');  
   const [selectedCountry, setSelectedCountry] = useState(countries[0]);
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
@@ -123,7 +123,7 @@ const Register = () => {
     }
 
     const fullPhone = selectedCountry.code + phoneNumbers;
-    const result = await register(name, email, fullPhone, password);
+    const result = await register(name, email.toLowerCase(), fullPhone, password);
     
     if (result.success) {
       setSuccess(result.message);
@@ -135,14 +135,14 @@ const Register = () => {
     }
     
     setLoading(false);
-  };
+  }; 
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 px-4">
       <Card className="w-full max-w-md dark:bg-gray-800 dark:border-gray-700">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold text-center dark:text-white">Cadastrar</CardTitle>
-          <CardDescription className="text-center dark:text-gray-400">
+          <CardDescription className="text-center dark:text-gray-400 mb-5">
             Crie sua conta para acessar o sistema
           </CardDescription>
         </CardHeader>
@@ -256,7 +256,7 @@ const Register = () => {
               </div>
             </div>
             
-            <Button type="submit" className="w-full" disabled={loading}>
+            <Button type="submit" className="w-full cursor-pointer" disabled={loading}>
               {loading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />

@@ -156,10 +156,10 @@ const Navbar = () => {
                   variant="ghost"
                   size="sm"
                   onClick={toggleTheme}
-                  className="text-gray-300 hover:text-white hover:bg-white/10 px-3 py-2 rounded-lg transition-all"
+                  className="text-gray-300 hover:text-white hover:bg-white/10 px-3 py-2 rounded-lg transition-all cursor-pointer"
                   title={theme === 'light' ? 'Ativar modo escuro' : 'Ativar modo claro'}
                 >
-                  {theme === 'light' ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
+                  {theme === 'light' ? <Moon className="h-4 w-4 cursor-pointer" /> : <Sun className="h-4 w-4 cursor-pointer" />}
                 </Button>
                 
                 <div className="ml-3 pl-3 border-l border-gray-700 dark:border-gray-600">
@@ -196,10 +196,10 @@ const Navbar = () => {
                   variant="ghost"
                   size="sm"
                   onClick={toggleTheme}
-                  className="text-gray-300 hover:text-white hover:bg-white/10 px-3 py-2 rounded-lg transition-all"
+                  className="text-gray-300 hover:text-white hover:bg-white/10 px-3 py-2 rounded-lg transition-all cursor-pointer"
                   title={theme === 'light' ? 'Ativar modo escuro' : 'Ativar modo claro'}
                 >
-                  {theme === 'light' ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
+                  {theme === 'light' ? <Moon className="h-4 w-4 cursor-pointer" /> : <Sun className="h-4 w-4 cursor-pointer" />}
                 </Button>
                 <Button variant="ghost" className="text-white hover:bg-white/10 border border-gray-700 hover:border-gray-600" asChild>
                   <Link to="/login">Entrar</Link>
@@ -220,7 +220,7 @@ const Navbar = () => {
               className="text-white hover:bg-white/10"
               title={theme === 'light' ? 'Ativar modo escuro' : 'Ativar modo claro'}
             >
-              {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
+              {theme === 'light' ? <Moon className="h-5 w-5 cursor-pointer" /> : <Sun className="h-5 w-5 cursor-pointer" />}
             </Button>
             <Button
               variant="ghost"
@@ -228,7 +228,7 @@ const Navbar = () => {
               className="text-white hover:bg-white/10"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
-              {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {isMobileMenuOpen ? <X className="h-6 w-6 cursor-pointer" /> : <Menu className="h-6 w-6 cursor-pointer" />}
             </Button>
           </div>
         </div>
