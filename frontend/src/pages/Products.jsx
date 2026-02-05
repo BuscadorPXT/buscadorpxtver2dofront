@@ -13,6 +13,7 @@ import PartnerBanner from '@/components/PartnerBanner';
 import { getOfficialColors, categorizeColors, formatColorName, normalizeColorForDB } from '@/data/productColors';
 import encryptionService from '@/services/encryption.service';
 import useDollarRate from '@/hooks/useDollarRate';
+import { toast } from 'sonner';
 
 const Products = () => {
   const { user } = useAuth();
@@ -85,6 +86,35 @@ const Products = () => {
   const [suppliers, setSuppliers] = useState({ updated: [], outdated: [] });
 
   const prevSearchTermRef = useRef('');
+
+  const formatTimeBR = (iso) =>
+  new Date(iso).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+
+  useEffect(() => {
+    const base = (api.defaults.baseURL || '').replace(/\/$/, '');
+
+    const es = new EventSource(`${base}/events`);
+
+    es.onopen = () => console.log('[SSE] aberto');
+    es.onmessage = (event) => {
+      let msg;
+
+      try { msg = JSON.parse(event.data); } catch { msg = null; }
+
+      if (msg?.type === 'products_updated') {
+        const time = msg.at ? formatTimeBR(msg.at) : '';
+        toast.success(`Lista de produtos atualizada (${time}).`);
+        const sameDate = String(msg.date).trim() === String(debouncedDate).trim();
+
+        if (sameDate) {
+          fetchProductsRef.current?.({ silent: true });
+        }
+      }
+    };
+    es.onerror = (err) => console.log('[SSE] error', err);
+
+    return () => es.close();
+  }, [debouncedDate]);
 
   const getProductTypePriority = (productName) => {
     if (!productName) return 4;

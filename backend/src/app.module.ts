@@ -36,6 +36,8 @@ import { Partner } from './partners/entities/partner.entity';
 import { SupplierClick } from './supplier-clicks/entities/supplier-click.entity';
 import { TestNotificationsModule } from './test-notifications/test-notifications.module';
 import { TestMessageLog } from './test-notifications/entities/test-message-log.entity';
+import { WebhookModule } from './webhook/webhook.module';
+import { EventsModule } from './events/events.module';
 
 @Module({
   imports: [
@@ -72,6 +74,8 @@ import { TestMessageLog } from './test-notifications/entities/test-message-log.e
     UploadModule,
     SupplierClicksModule,
     TestNotificationsModule,
+    WebhookModule,
+    EventsModule
   ],
   controllers: [AppController],
   providers: [AppService],
