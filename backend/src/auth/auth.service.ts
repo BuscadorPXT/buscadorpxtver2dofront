@@ -24,7 +24,7 @@ export class AuthService {
 
   async register(registerDto: RegisterDto): Promise<{ message: string }> {
     this.logger.log(`[REGISTER] Iniciando cadastro para email: ${registerDto.email}`);
-    
+
     const existingUser = await this.usersService.findByEmail(registerDto.email);
     if (existingUser) {
       throw new ConflictException('Email já está em uso');
@@ -32,9 +32,12 @@ export class AuthService {
 
     const hashedPassword = await bcrypt.hash(registerDto.password, 10);
 
+    const codeId = await this.generateCodeId();
+
     const newUser = await this.usersService.create({
       ...registerDto,
       password: hashedPassword,
+      codeId,
     });
 
     this.logger.log(`[REGISTER] Usuário criado com sucesso: ID=${newUser.id}, Email=${newUser.email}`);
@@ -62,13 +65,13 @@ export class AuthService {
 
   private async sendWhatsAppWelcome(user: any, registerDto: RegisterDto, firstName: string): Promise<void> {
     this.logger.log(`[REGISTER] Enviando WhatsApp de boas-vindas para: ${registerDto.phone}`);
-    
+
     const template = await this.settingsService.getWelcomeMessageTemplate();
     const welcomeMessage = template
       .replace(/\[e-mail\]/g, registerDto.email)
       .replace(/\[primeiro-nome\]/g, firstName)
       .replace(/\[nome-completo\]/g, registerDto.name || '');
-    
+
     await this.zapiService.sendTextMessage(
       {
         phone: registerDto.phone!,
@@ -79,13 +82,13 @@ export class AuthService {
       user.id,
       WhatsAppMessageType.WELCOME_REGISTRATION,
     );
-    
+
     this.logger.log(`[REGISTER] WhatsApp de boas-vindas enviado com sucesso para: ${registerDto.phone}`);
   }
 
   private async sendEmailWelcome(user: any, registerDto: RegisterDto, firstName: string): Promise<void> {
     this.logger.log(`[REGISTER] Enviando Email de boas-vindas para: ${registerDto.email}`);
-    
+
     const subject = 'Bem-vindo ao BuscadorPXT!';
     const html = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -98,13 +101,13 @@ export class AuthService {
         <p style="color: #666;">Atenciosamente,<br>Equipe BuscadorPXT</p>
       </div>
     `;
-    
+
     await this.mailjetService.sendEmail({
       to: registerDto.email,
       subject,
       html,
     });
-    
+
     this.logger.log(`[REGISTER] Email de boas-vindas enviado com sucesso para: ${registerDto.email}`);
   }
 
@@ -158,6 +161,7 @@ export class AuthService {
         id: user.id,
         name: user.name,
         email: user.email,
+        codeId: user.codeId,
         isApproved: user.isApproved,
         isAdmin: user.isAdmin,
         plan: user.plan ? {
@@ -172,7 +176,7 @@ export class AuthService {
 
   async forgotPassword(email: string): Promise<{ message: string }> {
     console.log(`[FORGOT_PASSWORD] Iniciando processo de recuperação de senha para: ${email}`);
-    
+
     const user = await this.usersService.findByEmail(email);
     console.log(`[FORGOT_PASSWORD] Busca de usuário concluída. Encontrado: ${user ? 'SIM' : 'NÃO'}`);
 
@@ -206,7 +210,7 @@ export class AuthService {
 
   async validateResetToken(token: string): Promise<{ valid: boolean; email?: string }> {
     const user = await this.usersService.findByResetToken(token);
-    
+
     if (!user) {
       return { valid: false };
     }
@@ -219,7 +223,7 @@ export class AuthService {
 
   async resetPassword(token: string, newPassword: string): Promise<{ message: string }> {
     const user = await this.usersService.findByResetToken(token);
-    
+
     if (!user) {
       throw new BadRequestException('Token inválido ou expirado. Solicite um novo link de recuperação.');
     }
@@ -227,8 +231,42 @@ export class AuthService {
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
     await this.usersService.updatePassword(user.id, hashedPassword);
-    
+
     console.log(`Senha redefinida com sucesso para: ${user.email}`);
     return { message: 'Senha redefinida com sucesso! Você já pode fazer login com sua nova senha.' };
   }
+
+  private async generateCodeId() {
+    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const numbers = '0123456789';
+
+    let aux = true;
+    let codeId = '';
+
+    while (aux) {
+      codeId = '';
+
+      // Gera 2 números
+      for (let i = 0; i < 2; i++) {
+        codeId += numbers.charAt(Math.floor(Math.random() * numbers.length));
+      }
+
+      // Gera 4 letras
+      for (let i = 0; i < 4; i++) {
+        codeId += letters.charAt(Math.floor(Math.random() * letters.length));
+      }
+
+      // Se quiser embaralhar para não ficar sempre "NNLLLL"
+      codeId = codeId.split('').sort(() => Math.random() - 0.5).join('');
+
+      const userExists = await this.usersService.findByCodeId(codeId);
+
+      if (!userExists) {
+        aux = false;
+      }
+    }
+
+    return codeId;
+  }
+
 }
