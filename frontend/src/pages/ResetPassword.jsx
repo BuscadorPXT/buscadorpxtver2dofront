@@ -1,8 +1,9 @@
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { GlassCard } from '@/components/ui/glass-card';
+import { BackgroundDecoration } from '@/components/ui/background-decoration';
 import { ArrowLeft, CheckCircle, Eye, EyeOff, Loader2, Lock, XCircle } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
@@ -53,12 +54,12 @@ const ResetPassword = () => {
     setError('');
 
     if (password.length < 6) {
-      setError('A senha deve ter no mínimo 6 caracteres');
+      setError('A senha deve ter no minimo 6 caracteres');
       return;
     }
 
     if (password !== confirmPassword) {
-      setError('As senhas não coincidem');
+      setError('As senhas nao coincidem');
       return;
     }
 
@@ -79,106 +80,110 @@ const ResetPassword = () => {
 
   if (validating) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 px-4">
-        <Card className="w-full max-w-md dark:bg-gray-800 dark:border-gray-700">
-          <CardContent className="flex flex-col items-center justify-center py-12">
-            <Loader2 className="h-8 w-8 animate-spin text-blue-600 dark:text-blue-400" />
-            <p className="mt-4 text-gray-600 dark:text-gray-400">Validando link...</p>
-          </CardContent>
-        </Card>
+      <div className="min-h-screen flex items-center justify-center bg-neutral-100 dark:bg-neutral-950 px-4 relative">
+        <BackgroundDecoration variant="subtle" />
+        <GlassCard variant="panel" padding="none" className="w-full max-w-md animate-fade-up">
+          <div className="flex flex-col items-center justify-center py-12 px-6">
+            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            <p className="mt-4 text-neutral-500 dark:text-neutral-400">Validando link...</p>
+          </div>
+        </GlassCard>
       </div>
     );
   }
 
   if (!tokenValid) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 px-4">
-        <Card className="w-full max-w-md dark:bg-gray-800 dark:border-gray-700">
-          <CardHeader className="space-y-1">
+      <div className="min-h-screen flex items-center justify-center bg-neutral-100 dark:bg-neutral-950 px-4 relative">
+        <BackgroundDecoration variant="subtle" />
+        <GlassCard variant="panel" padding="none" className="w-full max-w-md animate-fade-up">
+          <div className="p-6 pb-2 space-y-1">
             <div className="flex justify-center mb-4">
-              <div className="bg-red-100 dark:bg-red-900 p-3 rounded-full">
+              <div className="bg-red-100 dark:bg-red-900/30 p-3 rounded-full">
                 <XCircle className="h-8 w-8 text-red-600 dark:text-red-400" />
               </div>
             </div>
-            <CardTitle className="text-2xl font-bold text-center dark:text-white">
-              Link Inválido
-            </CardTitle>
-            <CardDescription className="text-center dark:text-gray-400">
-              O link de recuperação é inválido ou expirou
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <p className="text-center text-gray-600 dark:text-gray-400">
-              Os links de recuperação de senha são válidos por apenas 1 hora. 
-              Se você ainda precisa redefinir sua senha, solicite um novo link.
+            <h2 className="text-2xl font-bold text-center text-neutral-900 dark:text-white">
+              Link Invalido
+            </h2>
+            <p className="text-center text-neutral-500 dark:text-neutral-400 text-sm">
+              O link de recuperacao e invalido ou expirou
+            </p>
+          </div>
+          <div className="p-6 pt-2 space-y-4">
+            <p className="text-center text-neutral-600 dark:text-neutral-400">
+              Os links de recuperacao de senha sao validos por apenas 1 hora.
+              Se voce ainda precisa redefinir sua senha, solicite um novo link.
             </p>
 
             <div className="flex flex-col gap-2 pt-4">
               <Link to="/forgot-password">
-                <Button className="w-full">
+                <Button variant="accent" size="pill" className="w-full">
                   Solicitar Novo Link
                 </Button>
               </Link>
               <Link to="/login">
-                <Button variant="outline" className="w-full">
+                <Button variant="outline" className="w-full rounded-xl">
                   <ArrowLeft className="mr-2 h-4 w-4" />
                   Voltar para o Login
                 </Button>
               </Link>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </GlassCard>
       </div>
     );
   }
 
   if (success) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 px-4">
-        <Card className="w-full max-w-md dark:bg-gray-800 dark:border-gray-700">
-          <CardHeader className="space-y-1">
+      <div className="min-h-screen flex items-center justify-center bg-neutral-100 dark:bg-neutral-950 px-4 relative">
+        <BackgroundDecoration variant="subtle" />
+        <GlassCard variant="panel" padding="none" className="w-full max-w-md animate-fade-up">
+          <div className="p-6 pb-2 space-y-1">
             <div className="flex justify-center mb-4">
-              <div className="bg-green-100 dark:bg-green-900 p-3 rounded-full">
-                <CheckCircle className="h-8 w-8 text-green-600 dark:text-green-400" />
+              <div className="bg-emerald-100 dark:bg-emerald-900/30 p-3 rounded-full">
+                <CheckCircle className="h-8 w-8 text-emerald-600 dark:text-emerald-400" />
               </div>
             </div>
-            <CardTitle className="text-2xl font-bold text-center dark:text-white">
+            <h2 className="text-2xl font-bold text-center text-neutral-900 dark:text-white">
               Senha Redefinida!
-            </CardTitle>
-            <CardDescription className="text-center dark:text-gray-400">
+            </h2>
+            <p className="text-center text-neutral-500 dark:text-neutral-400 text-sm">
               Sua senha foi alterada com sucesso
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <p className="text-center text-gray-600 dark:text-gray-400">
-              Agora você já pode fazer login com sua nova senha.
+            </p>
+          </div>
+          <div className="p-6 pt-2 space-y-4">
+            <p className="text-center text-neutral-600 dark:text-neutral-400">
+              Agora voce ja pode fazer login com sua nova senha.
             </p>
 
             <div className="pt-4">
-              <Button className="w-full" onClick={() => navigate('/login')}>
+              <Button variant="accent" size="pill" className="w-full" onClick={() => navigate('/login')}>
                 Ir para o Login
               </Button>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </GlassCard>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 px-4">
-      <Card className="w-full max-w-md dark:bg-gray-800 dark:border-gray-700">
-        <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold text-center dark:text-white">
+    <div className="min-h-screen flex items-center justify-center bg-neutral-100 dark:bg-neutral-950 px-4 relative">
+      <BackgroundDecoration variant="subtle" />
+      <GlassCard variant="panel" padding="none" className="w-full max-w-md animate-fade-up">
+        <div className="p-6 pb-2 space-y-1">
+          <h2 className="text-2xl font-bold text-center text-neutral-900 dark:text-white">
             Redefinir Senha
-          </CardTitle>
-          <CardDescription className="text-center dark:text-gray-400">
+          </h2>
+          <p className="text-center text-neutral-500 dark:text-neutral-400 text-sm">
             {maskedEmail && (
               <>Criando nova senha para <strong>{maskedEmail}</strong></>
             )}
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
+          </p>
+        </div>
+        <div className="p-6 pt-2">
           <form onSubmit={handleSubmit} className="space-y-4">
             {error && (
               <Alert variant="destructive">
@@ -189,54 +194,54 @@ const ResetPassword = () => {
             <div className="space-y-2">
               <Label htmlFor="password">Nova Senha</Label>
               <div className="relative">
-                <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                <Lock className="absolute left-3 top-3.5 h-4 w-4 text-neutral-400" />
                 <Input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="pl-10 pr-10"
+                  className="pl-10 pr-10 h-12 rounded-xl border-neutral-200 dark:border-neutral-700"
                   required
                   minLength={6}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
+                  className="absolute right-3 top-3.5 text-neutral-400 hover:text-neutral-600"
                 >
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
               </div>
-              <p className="text-xs text-gray-500 dark:text-gray-400">
-                Mínimo de 6 caracteres
+              <p className="text-xs text-neutral-400">
+                Minimo de 6 caracteres
               </p>
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="confirmPassword">Confirmar Nova Senha</Label>
               <div className="relative">
-                <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                <Lock className="absolute left-3 top-3.5 h-4 w-4 text-neutral-400" />
                 <Input
                   id="confirmPassword"
                   type={showConfirmPassword ? 'text' : 'password'}
                   placeholder="••••••••"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="pl-10 pr-10"
+                  className="pl-10 pr-10 h-12 rounded-xl border-neutral-200 dark:border-neutral-700"
                   required
                 />
                 <button
                   type="button"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
+                  className="absolute right-3 top-3.5 text-neutral-400 hover:text-neutral-600"
                 >
                   {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
               </div>
             </div>
 
-            <Button type="submit" className="w-full" disabled={loading}>
+            <Button type="submit" variant="accent" size="pill" className="w-full" disabled={loading}>
               {loading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -249,16 +254,16 @@ const ResetPassword = () => {
           </form>
 
           <div className="mt-6 text-center">
-            <Link 
-              to="/login" 
-              className="text-sm text-blue-600 dark:text-blue-400 hover:underline font-medium inline-flex items-center"
+            <Link
+              to="/login"
+              className="text-sm text-neutral-500 hover:text-neutral-900 dark:hover:text-white hover:underline font-medium inline-flex items-center transition-colors"
             >
               <ArrowLeft className="mr-1 h-4 w-4" />
               Voltar para o Login
             </Link>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </GlassCard>
     </div>
   );
 };

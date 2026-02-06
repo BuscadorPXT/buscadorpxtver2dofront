@@ -162,18 +162,18 @@ const UserLocationMap = ({ users = [] }) => {
     <div className="relative">
       <div 
         ref={mapRef} 
-        className="w-full h-[500px] rounded-lg border border-gray-200 shadow-sm"
+        className="w-full h-[500px] rounded-lg border border-neutral-200 shadow-sm"
         style={{ zIndex: 1 }}
       />
 
-      <div className="absolute bottom-4 right-4 bg-white p-3 rounded-lg shadow-lg border border-gray-200 z-[1000]">
-        <div className="text-xs font-semibold text-gray-700 mb-2">Legenda</div>
-        <div className="flex items-center gap-2 text-xs text-gray-600 mb-1">
+      <div className="absolute bottom-4 right-4 bg-white p-3 rounded-lg shadow-lg border border-neutral-200 z-[1000]">
+        <div className="text-xs font-semibold text-neutral-700 mb-2">Legenda</div>
+        <div className="flex items-center gap-2 text-xs text-neutral-600 mb-1">
           <div className="w-4 h-4 rounded-full bg-green-500 border-2 border-white"></div>
           <span>Online</span>
         </div>
-        <div className="flex items-center gap-2 text-xs text-gray-600">
-          <div className="w-4 h-4 rounded-full bg-gray-400 border-2 border-white"></div>
+        <div className="flex items-center gap-2 text-xs text-neutral-600">
+          <div className="w-4 h-4 rounded-full bg-neutral-400 border-2 border-white"></div>
           <span>Offline</span>
         </div>
       </div>

@@ -13,8 +13,8 @@ const ErrorMessage = ({
       <div className="text-center space-y-4">
         <AlertCircle className="h-16 w-16 text-red-500 mx-auto" />
         <div>
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">{title}</h3>
-          <p className="text-gray-600">{message}</p>
+          <h3 className="text-lg font-semibold text-neutral-900 mb-2">{title}</h3>
+          <p className="text-neutral-600">{message}</p>
         </div>
         
         {showRetry && onRetry && (

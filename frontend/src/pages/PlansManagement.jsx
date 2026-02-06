@@ -217,7 +217,7 @@ const PlansManagement = () => {
                     {plan.isActive ? (
                       <Power className="h-4 w-4 text-green-600" />
                     ) : (
-                      <PowerOff className="h-4 w-4 text-gray-400" />
+                      <PowerOff className="h-4 w-4 text-neutral-400" />
                     )}
                   </Button>
                 </div>

@@ -216,10 +216,10 @@ export default function Analytics() {
 
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-3xl font-bold text-neutral-900 dark:text-white">
             Analytics & Rastreamento
           </h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-1">
+          <p className="text-neutral-600 dark:text-neutral-400 mt-1">
             Visualize usuários online e estatísticas de acesso
           </p>
         </div>
@@ -295,32 +295,32 @@ export default function Analytics() {
         </CardHeader>
         <CardContent>
           {onlineUsers.length === 0 ? (
-            <p className="text-gray-500 text-center py-4">Nenhum usuário online no momento</p>
+            <p className="text-neutral-500 text-center py-4">Nenhum usuário online no momento</p>
           ) : (
             <div className="space-y-3">
               {onlineUsers.map((user) => (
                 <div
                   key={user.userId}
-                  className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg"
+                  className="flex items-center justify-between p-3 bg-neutral-50 dark:bg-neutral-800 rounded-lg"
                 >
                   <div className="flex items-center gap-3">
                     <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
                       <Users className="h-5 w-5 text-primary" />
                     </div>
                     <div>
-                      <p className="font-medium text-gray-900 dark:text-white">
+                      <p className="font-medium text-neutral-900 dark:text-white">
                         {user.name}
                       </p>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                      <p className="text-sm text-neutral-600 dark:text-neutral-400">
                         {user.email}
                       </p>
                       {user.currentPage && (
-                        <p className="text-xs text-gray-500 mt-1">
+                        <p className="text-xs text-neutral-500 mt-1">
                           📄 {user.currentPage}
                         </p>
                       )}
                       {user.city && (
-                        <p className="text-xs text-gray-500 mt-1 flex items-center gap-1">
+                        <p className="text-xs text-neutral-500 mt-1 flex items-center gap-1">
                           <MapPin className="h-3 w-3" />
                           {user.city}{user.region ? `, ${user.region}` : ''}{user.country ? ` - ${user.country}` : ''}
                         </p>
@@ -331,12 +331,12 @@ export default function Analytics() {
                     {user.isAdmin && (
                       <Badge variant="secondary">Admin</Badge>
                     )}
-                    <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+                    <div className="flex items-center gap-2 text-sm text-neutral-600 dark:text-neutral-400">
                       <Clock className="h-3 w-3" />
                       {formatDate(user.connectedAt)}
                     </div>
                     {user.ipAddress && user.ipAddress !== 'unknown' && (
-                      <div className="flex items-center gap-1 text-xs text-gray-500">
+                      <div className="flex items-center gap-1 text-xs text-neutral-500">
                         <Globe className="h-3 w-3" />
                         {user.ipAddress}
                       </div>
@@ -433,14 +433,14 @@ export default function Analytics() {
           <CardContent>
             <div className="space-y-2 max-h-[400px] overflow-y-auto">
               {heatmapData.slice(0, 20).map((location, index) => (
-                <div key={index} className="flex items-center justify-between p-3 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-colors border border-transparent hover:border-gray-200 dark:hover:border-gray-700">
+                <div key={index} className="flex items-center justify-between p-3 hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-lg transition-colors border border-transparent hover:border-neutral-200 dark:hover:border-neutral-700">
                   <div className="flex items-center gap-3 flex-1">
                     <span className="text-2xl">{location.countryCode ? `${String.fromCodePoint(0x1F1E6 - 65 + location.countryCode.charCodeAt(0))}${String.fromCodePoint(0x1F1E6 - 65 + location.countryCode.charCodeAt(1))}` : '🌍'}</span>
                     <div className="flex-1">
-                      <p className="font-medium text-sm text-gray-900 dark:text-white">
+                      <p className="font-medium text-sm text-neutral-900 dark:text-white">
                         {location.city ? `${location.city}, ${location.region}` : location.country}
                       </p>
-                      <div className="flex items-center gap-3 text-xs text-gray-500 mt-1">
+                      <div className="flex items-center gap-3 text-xs text-neutral-500 mt-1">
                         <span className="flex items-center gap-1">
                           <Activity className="h-3 w-3" />
                           {location.totalSessions} sessões
@@ -462,7 +462,7 @@ export default function Analytics() {
                 </div>
               ))}
               {heatmapData.length === 0 && (
-                <p className="text-gray-500 text-center py-4">
+                <p className="text-neutral-500 text-center py-4">
                   Nenhum dado de localização disponível
                 </p>
               )}
@@ -488,7 +488,7 @@ export default function Analytics() {
                     <p className="font-medium text-sm">
                       {page.pagePath}
                     </p>
-                    <p className="text-xs text-gray-500">
+                    <p className="text-xs text-neutral-500">
                       {page.totalViews} visualizações · {page.uniqueUsers} usuários únicos
                     </p>
                   </div>
@@ -498,7 +498,7 @@ export default function Analytics() {
                 </div>
               ))}
               {topPages.length === 0 && (
-                <p className="text-gray-500 text-center py-4">
+                <p className="text-neutral-500 text-center py-4">
                   Nenhum dado de páginas disponível
                 </p>
               )}

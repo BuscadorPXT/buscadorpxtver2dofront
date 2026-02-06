@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { Check, X, Search, ChevronDown } from 'lucide-react';
+import { Check, X, Search, ChevronDown, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -23,6 +23,7 @@ const MultiSelectFilter = ({
 }) => {
   const [open, setOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [expandedGroups, setExpandedGroups] = useState({});
 
   const isGrouped = options && typeof options === 'object' && options.groups;
   const groups = isGrouped ? options.groups : [{ title: '', options: options || [] }];
@@ -181,20 +182,50 @@ const MultiSelectFilter = ({
                 groups.map((group, groupIndex) => {
                   const groupOptions = filteredOptions.filter(opt => opt.group === group.title);
                   if (groupOptions.length === 0) return null;
-                  
+
+                  const isExpanded = expandedGroups[group.title] !== false;
+                  const availableGroupOpts = groupOptions.filter(o => o.available);
+                  const selectedInGroup = availableGroupOpts.filter(o => selectedValues.includes(o.value));
+                  const allGroupSelected = availableGroupOpts.length > 0 && selectedInGroup.length === availableGroupOpts.length;
+                  const someGroupSelected = selectedInGroup.length > 0 && !allGroupSelected;
+
+                  const handleGroupToggle = () => {
+                    if (allGroupSelected) {
+                      onChange(selectedValues.filter(v => !availableGroupOpts.map(o => o.value).includes(v)));
+                    } else {
+                      const newValues = new Set([...selectedValues, ...availableGroupOpts.map(o => o.value)]);
+                      onChange(Array.from(newValues));
+                    }
+                  };
+
                   return (
                     <div key={group.title || `group-${groupIndex}`}>
                       {group.title && (
-                        <div className="px-2 py-1 text-xs font-semibold text-muted-foreground uppercase tracking-wide">
-                          {group.title}
+                        <div
+                          className="flex items-center gap-2 px-2 py-1.5 rounded-sm hover:bg-accent cursor-pointer select-none"
+                          onClick={() => setExpandedGroups(prev => ({ ...prev, [group.title]: !isExpanded }))}
+                        >
+                          <Checkbox
+                            checked={allGroupSelected}
+                            onCheckedChange={handleGroupToggle}
+                            onClick={(e) => e.stopPropagation()}
+                            className={someGroupSelected ? "data-[state=unchecked]:bg-primary/20 data-[state=unchecked]:border-primary" : ""}
+                          />
+                          <ChevronRight className={`h-3 w-3 text-muted-foreground transition-transform duration-200 ${isExpanded ? 'rotate-90' : ''}`} />
+                          <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide flex-1">
+                            {group.title}
+                          </span>
+                          <span className="text-[10px] text-muted-foreground tabular-nums">
+                            {selectedInGroup.length}/{availableGroupOpts.length}
+                          </span>
                         </div>
                       )}
-                      {groupOptions.map((option) => (
+                      {(isExpanded || !group.title) && groupOptions.map((option) => (
                         <div
                           key={option.value}
-                          className={`flex items-center space-x-2 p-2 rounded-sm ml-2 ${
-                            option.available 
-                              ? 'hover:bg-accent cursor-pointer' 
+                          className={`flex items-center space-x-2 p-2 rounded-sm ${group.title ? 'ml-6' : 'ml-2'} ${
+                            option.available
+                              ? 'hover:bg-accent cursor-pointer'
                               : 'opacity-40 cursor-not-allowed'
                           }`}
                           onClick={(e) => {

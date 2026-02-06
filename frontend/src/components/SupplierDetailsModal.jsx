@@ -143,7 +143,7 @@ export default function SupplierDetailsModal({ open, onOpenChange, supplier, sel
                     Total de Produtos
                   </span>
                 </div>
-                <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">
+                <div className="text-3xl font-bold text-primary dark:text-blue-400">
                   {stats.totalProducts.toLocaleString('pt-BR')}
                 </div>
               </div>

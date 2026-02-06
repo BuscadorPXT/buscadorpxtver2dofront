@@ -49,7 +49,7 @@ const NotificationModal = ({ notification, isOpen, onClose, onMarkAsRead }) => {
               components={{
 
                 a: ({ node, ...props }) => (
-                  <a {...props} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-600" />
+                  <a {...props} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-primary" />
                 ),
 
                 img: ({ node, ...props }) => (
@@ -58,9 +58,9 @@ const NotificationModal = ({ notification, isOpen, onClose, onMarkAsRead }) => {
 
                 code: ({ node, inline, ...props }) => (
                   inline ? (
-                    <code className="bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded text-sm" {...props} />
+                    <code className="bg-neutral-100 dark:bg-neutral-800 px-1 py-0.5 rounded text-sm" {...props} />
                   ) : (
-                    <code className="block bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto" {...props} />
+                    <code className="block bg-neutral-100 dark:bg-neutral-800 p-4 rounded-lg overflow-x-auto" {...props} />
                   )
                 ),
               }}

@@ -24,6 +24,7 @@ import Settings from './pages/Settings';
 import Analytics from './pages/Analytics';
 import MyDevices from './pages/MyDevices';
 import AdminUserSessions from './pages/AdminUserSessions';
+import { BackgroundDecoration } from './components/ui/background-decoration';
 import { Toaster } from 'sonner';
 import { useHoursCheck } from './hooks/useHoursCheck';
 import { usePageTracking } from './hooks/usePageTracking';
@@ -36,8 +37,10 @@ function RouterContent() {
 
   return (
     <>
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
+      <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950 transition-colors duration-200">
+        <BackgroundDecoration variant="subtle" />
         <Navbar />
+        <main className="pt-4 sm:pt-6">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/products" element={
@@ -116,9 +119,10 @@ function RouterContent() {
             </ProtectedRoute>
           } />
         </Routes>
-        <PlanExpiredModal 
-          open={showExpiredModal} 
-          onOpenChange={setShowExpiredModal} 
+        </main>
+        <PlanExpiredModal
+          open={showExpiredModal}
+          onOpenChange={setShowExpiredModal}
         />
         <Toaster position="top-right" />
       </div>

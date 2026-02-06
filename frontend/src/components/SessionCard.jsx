@@ -43,19 +43,19 @@ export default function SessionCard({ session, onRemove, isCurrentSession, showU
 
     return (
         <div
-            className={`border rounded-lg p-4 ${isCurrentSession ? 'border-blue-500 bg-blue-50' : 'border-gray-200 bg-white'
+            className={`border rounded-lg p-4 ${isCurrentSession ? 'border-blue-500 bg-blue-50' : 'border-neutral-200 bg-white'
                 }`}
         >
             <div className="flex items-start justify-between">
                 <div className="flex items-start space-x-3 flex-1">
 
-                    <div className={`p-2 rounded-lg ${isCurrentSession ? 'bg-blue-100' : 'bg-gray-100'}`}>
-                        <DeviceIcon className={`w-6 h-6 ${isCurrentSession ? 'text-blue-600' : 'text-gray-600'}`} />
+                    <div className={`p-2 rounded-lg ${isCurrentSession ? 'bg-blue-100' : 'bg-neutral-100'}`}>
+                        <DeviceIcon className={`w-6 h-6 ${isCurrentSession ? 'text-primary' : 'text-neutral-600'}`} />
                     </div>
 
                     <div className="flex-1">
                         <div className="flex items-center space-x-2">
-                            <h3 className="font-semibold text-gray-900">
+                            <h3 className="font-semibold text-neutral-900">
                                 {os} - {browser}
                             </h3>
                             {isCurrentSession && (
@@ -66,24 +66,24 @@ export default function SessionCard({ session, onRemove, isCurrentSession, showU
                         </div>
 
                         <div className="mt-1 space-y-1">
-                            <p className="text-sm text-gray-600">
+                            <p className="text-sm text-neutral-600">
                                 <span className="font-medium">IP:</span> {session.ipAddress}
                             </p>
-                            <p className="text-sm text-gray-600">
+                            <p className="text-sm text-neutral-600">
                                 <span className="font-medium">Última atividade:</span> {lastActivity}
                             </p>
                             {showUserId && (
-                                <p className="text-sm text-gray-600">
+                                <p className="text-sm text-neutral-600">
                                     <span className="font-medium">User ID:</span> {session.userId}
                                 </p>
                             )}
                         </div>
 
                         <details className="mt-2">
-                            <summary className="text-xs text-gray-500 cursor-pointer hover:text-gray-700">
+                            <summary className="text-xs text-neutral-500 cursor-pointer hover:text-neutral-700">
                                 Ver detalhes técnicos
                             </summary>
-                            <p className="text-xs text-gray-500 mt-1 break-all">{session.userAgent}</p>
+                            <p className="text-xs text-neutral-500 mt-1 break-all">{session.userAgent}</p>
                         </details>
                     </div>
                 </div>

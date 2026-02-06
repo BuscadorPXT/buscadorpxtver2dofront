@@ -172,7 +172,7 @@ const AdminNotifications = () => {
 
   if (viewMode === 'create') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 p-6">
+      <div className="min-h-screen bg-gradient-to-br from-neutral-50 via-neutral-100 to-neutral-200 dark:from-neutral-900 dark:via-neutral-800 dark:to-neutral-900 p-6">
         <div className="max-w-6xl mx-auto">
 
           <div className="mb-6">
@@ -187,10 +187,10 @@ const AdminNotifications = () => {
               <ArrowLeft className="h-4 w-4 mr-2" />
               Voltar
             </Button>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
+            <h1 className="text-3xl font-bold text-neutral-900 dark:text-white flex items-center gap-3">
               Nova Notificação
             </h1>
-            <p className="text-gray-600 dark:text-gray-400 mt-2">
+            <p className="text-neutral-600 dark:text-neutral-400 mt-2">
               Use o editor abaixo para criar sua notificação com suporte a Markdown
             </p>
           </div>
@@ -257,7 +257,7 @@ const AdminNotifications = () => {
                             <SelectItem key={user.id} value={user.id}>
                               <div className="flex flex-col">
                                 <span className="font-medium">{user.name}</span>
-                                <span className="text-xs text-gray-500">{user.email}</span>
+                                <span className="text-xs text-neutral-500">{user.email}</span>
                               </div>
                             </SelectItem>
                           ))}
@@ -293,7 +293,7 @@ const AdminNotifications = () => {
                     }}
                   />
                 </div>
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+                <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-2">
                   💡 O editor mostra preview ao lado. Use a barra de ferramentas para formatar ou digite Markdown diretamente.
                 </p>
               </CardContent>
@@ -313,7 +313,7 @@ const AdminNotifications = () => {
               <Button
                 type="submit"
                 disabled={loading}
-                className="bg-blue-600 hover:bg-blue-700"
+                className="bg-primary hover:bg-blue-700"
               >
                 <Send className="h-4 w-4 mr-2" />
                 {loading ? 'Enviando...' : 'Enviar Notificação'}
@@ -331,10 +331,10 @@ const AdminNotifications = () => {
 
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-4 sm:mb-6 lg:mb-8">
           <div>
-            <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-1 sm:mb-2 flex items-center gap-2 sm:gap-3">
+            <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-neutral-900 mb-1 sm:mb-2 flex items-center gap-2 sm:gap-3">
               Gerenciar Notificações
             </h1>
-            <p className="text-sm sm:text-base text-gray-600">
+            <p className="text-sm sm:text-base text-neutral-600">
               Envie notificações para usuários específicos ou para todos
             </p>
           </div>
@@ -348,7 +348,7 @@ const AdminNotifications = () => {
             <div className="flex flex-col md:flex-row gap-4">
               <div className="flex-1">
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-400" />
                   <Input
                     placeholder="Buscar por título, mensagem ou destinatário..."
                     value={searchTerm}
@@ -377,14 +377,14 @@ const AdminNotifications = () => {
         {notifications.length === 0 ? (
           <Card className="text-center">
             <CardContent className="py-8 sm:py-12">
-              <Bell className="h-12 w-12 sm:h-16 sm:w-16 mx-auto mb-3 sm:mb-4 text-gray-400" />
-              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-1 sm:mb-2">
+              <Bell className="h-12 w-12 sm:h-16 sm:w-16 mx-auto mb-3 sm:mb-4 text-neutral-400" />
+              <h3 className="text-lg sm:text-xl font-semibold text-neutral-900 mb-1 sm:mb-2">
                 Nenhuma notificação enviada
               </h3>
-              <p className="text-sm sm:text-base text-gray-600 mb-3 sm:mb-4">
+              <p className="text-sm sm:text-base text-neutral-600 mb-3 sm:mb-4">
                 Crie sua primeira notificação para começar
               </p>
-              <Button onClick={() => setViewMode('create')} className="bg-blue-600 hover:bg-blue-700">
+              <Button onClick={() => setViewMode('create')} className="bg-primary hover:bg-blue-700">
                 <FileText className="h-4 w-4 mr-2" />
                 Criar Notificação
               </Button>
@@ -393,11 +393,11 @@ const AdminNotifications = () => {
         ) : filteredNotifications.length === 0 ? (
           <Card className="text-center">
             <CardContent className="py-8 sm:py-12">
-              <Search className="h-12 w-12 sm:h-16 sm:w-16 mx-auto mb-3 sm:mb-4 text-gray-400" />
-              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-1 sm:mb-2">
+              <Search className="h-12 w-12 sm:h-16 sm:w-16 mx-auto mb-3 sm:mb-4 text-neutral-400" />
+              <h3 className="text-lg sm:text-xl font-semibold text-neutral-900 mb-1 sm:mb-2">
                 Nenhuma notificação encontrada
               </h3>
-              <p className="text-sm sm:text-base text-gray-600">
+              <p className="text-sm sm:text-base text-neutral-600">
                 Tente ajustar os filtros de pesquisa
               </p>
             </CardContent>
@@ -420,11 +420,11 @@ const AdminNotifications = () => {
                       <TableCell>
                         <div className="flex items-center gap-2">
                           <div className="flex flex-col min-w-0">
-                            <span className="font-medium text-gray-900 text-sm sm:text-base truncate">
+                            <span className="font-medium text-neutral-900 text-sm sm:text-base truncate">
                               {notification.title}
                             </span>
                             {notification.imageUrl && (
-                              <span className="text-xs text-gray-500 flex items-center gap-1 mt-1">
+                              <span className="text-xs text-neutral-500 flex items-center gap-1 mt-1">
                                 <FileText className="h-3 w-3" />
                                 Contém imagem
                               </span>
@@ -433,12 +433,12 @@ const AdminNotifications = () => {
                         </div>
                       </TableCell>
                       <TableCell>
-                        <span className="text-xs sm:text-sm text-gray-600">
+                        <span className="text-xs sm:text-sm text-neutral-600">
                           {notification.isGlobal ? 'Todos os usuários' : getUserName(notification.userId)}
                         </span>
                       </TableCell>
                       <TableCell>
-                        <span className="text-xs sm:text-sm text-gray-600 whitespace-nowrap">
+                        <span className="text-xs sm:text-sm text-neutral-600 whitespace-nowrap">
                           {new Date(notification.createdAt).toLocaleString('pt-BR', {
                             day: '2-digit',
                             month: '2-digit',
@@ -519,16 +519,16 @@ const AdminNotifications = () => {
                   <ReactMarkdown
                     components={{
                       a: ({ node, ...props }) => (
-                        <a {...props} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-600" />
+                        <a {...props} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-primary" />
                       ),
                       img: ({ node, ...props }) => (
                         <img {...props} className="rounded-lg max-w-full h-auto" />
                       ),
                       code: ({ node, inline, ...props }) => (
                         inline ? (
-                          <code className="bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded text-sm" {...props} />
+                          <code className="bg-neutral-100 dark:bg-neutral-800 px-1 py-0.5 rounded text-sm" {...props} />
                         ) : (
-                          <code className="block bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-x-auto" {...props} />
+                          <code className="block bg-neutral-100 dark:bg-neutral-800 p-4 rounded-lg overflow-x-auto" {...props} />
                         )
                       ),
                     }}

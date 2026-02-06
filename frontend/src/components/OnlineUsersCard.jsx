@@ -101,7 +101,7 @@ const OnlineUsersCard = () => {
         {onlineUsers.length > 0 && (
           <div className="mb-3 sm:mb-4 space-y-2">
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-3.5 w-3.5 sm:h-4 sm:w-4" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-400 h-3.5 w-3.5 sm:h-4 sm:w-4" />
               <Input
                 ref={searchInputRef}
                 type="text"

@@ -188,7 +188,7 @@ const SuppliersModal = ({ open, onOpenChange, selectedDate }) => {
         {!loading && (
           <div className="grid grid-cols-3 gap-4 mb-4">
             <div className="bg-blue-50 dark:bg-blue-950/20 rounded-lg p-4 text-center">
-              <div className="text-3xl font-bold text-blue-600 dark:text-blue-400">
+              <div className="text-3xl font-bold text-primary dark:text-blue-400">
                 {stats.totalSuppliers || 0}
               </div>
               <div className="text-sm text-muted-foreground uppercase tracking-wide">

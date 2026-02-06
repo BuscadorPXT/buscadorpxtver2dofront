@@ -4,13 +4,16 @@ import { api, useAuth } from '../contexts/AuthContext';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
-import { Loader2, Search, Filter, X, Smartphone, Building, DollarSign, TrendingDown, Wifi, Clock, UserPlus, Bug, RefreshCw, Calendar, ChevronDown, Cable, Tablet, Watch, Headphones, Laptop } from 'lucide-react';
+import { GlassCard } from '@/components/ui/glass-card';
+import { Loader2, Search, Filter, X, Smartphone, Building, DollarSign, TrendingDown, Wifi, Clock, UserPlus, Bug, RefreshCw, Calendar, ChevronDown, Cable, Tablet, Watch, Headphones, Laptop, Package, Store, Monitor } from 'lucide-react';
 import MultiSelectFilter from '@/components/MultiSelectFilter';
 import SuppliersModal from '@/components/SuppliersModal';
 import SearchAutocomplete from '@/components/SearchAutocomplete';
-import DateFilter from '@/components/DateFilter';
+import DatePickerDropdown from '@/components/DatePickerDropdown';
 import PartnerBanner from '@/components/PartnerBanner';
+import BannerCarousel from '@/components/BannerCarousel';
 import { getOfficialColors, categorizeColors, formatColorName, normalizeColorForDB } from '@/data/productColors';
+import { groupCategories } from '@/data/categoryGroups';
 import encryptionService from '@/services/encryption.service';
 import useDollarRate from '@/hooks/useDollarRate';
 import { toast } from 'sonner';
@@ -157,18 +160,50 @@ const Products = () => {
       return <Tablet className={`${className} text-purple-500`} />;
     }
 
-    if (categoryUpper === 'MAC' || categoryUpper.includes('MACBOOK') || categoryUpper.includes('IMAC') || 
+    if (categoryUpper === 'MCB' || categoryUpper.includes('MACBOOK') || categoryUpper.includes('IMAC') ||
         nameUpper.includes('MACBOOK') || nameUpper.includes('IMAC')) {
       return <Laptop className={`${className} text-purple-600 dark:text-purple-400`} />;
     }
 
-    if (categoryUpper === 'AWA' || categoryUpper.includes('WATCH') || nameUpper.includes('WATCH')) {
-      return <Laptop className={`${className} text-purple-600 dark:text-purple-400`} />;
+    if (categoryUpper === 'RLG' || categoryUpper === 'AWA' || categoryUpper.includes('WATCH') || categoryUpper.includes('RELOGIO') || nameUpper.includes('WATCH')) {
+      return <Watch className={`${className} text-pink-500`} />;
     }
 
-    if (categoryUpper === 'AIR' || categoryUpper.includes('AIRPOD') || categoryUpper.includes('PODS') || 
+    if (categoryUpper === 'MNTR' || categoryUpper.includes('MONITOR') || nameUpper.includes('MONITOR')) {
+      return <Monitor className={`${className} text-cyan-500`} />;
+    }
+
+    if (categoryUpper === 'AIR' || categoryUpper === 'PODS' || categoryUpper.includes('AIRPOD') ||
         nameUpper.includes('AIRPOD') || nameUpper.includes('PODS')) {
       return <Headphones className={`${className} text-indigo-500`} />;
+    }
+
+    if (categoryUpper === 'ACSS' || categoryUpper.includes('ACESSOR')) {
+      return <Cable className={`${className} text-amber-600`} />;
+    }
+
+    if (categoryUpper === 'MI' || categoryUpper === 'XIAOMI' || nameUpper.includes('XIAOMI')) {
+      return <Smartphone className={`${className} text-orange-500`} />;
+    }
+
+    if (categoryUpper === 'NOTE') {
+      return <Smartphone className={`${className} text-blue-400`} />;
+    }
+
+    if (categoryUpper === 'PAD') {
+      return <Tablet className={`${className} text-teal-500`} />;
+    }
+
+    if (categoryUpper === 'POCO' || nameUpper.includes('POCO')) {
+      return <Smartphone className={`${className} text-yellow-500`} />;
+    }
+
+    if (categoryUpper === 'RDM' || categoryUpper === 'REDMI' || nameUpper.includes('REDMI')) {
+      return <Smartphone className={`${className} text-red-500`} />;
+    }
+
+    if (categoryUpper === 'REAL' || categoryUpper === 'REALME' || nameUpper.includes('REALME')) {
+      return <Smartphone className={`${className} text-green-500`} />;
     }
 
     return <Cable className={`${className} text-amber-600`} />;
@@ -741,7 +776,7 @@ const Products = () => {
       return Array.from(allValues).sort();
     };
 
-    setCategories(ensureSelectedInList(cats, selectedCategories));
+    setCategories(groupCategories(ensureSelectedInList(cats, selectedCategories)));
 
     const finalColors = ensureSelectedColorsInList(cols, selectedColors);
     
@@ -1067,167 +1102,84 @@ const Products = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800">
-        <div className="w-full max-w-[95%] lg:w-[90%] mx-auto px-2 sm:px-4 lg:px-8 py-4 sm:py-6 lg:py-8">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 space-y-3 sm:space-y-4">
 
-          <div className="animate-in slide-in-from-top-4 duration-300">
-
-            <div className="hidden md:flex items-center justify-between py-3 px-4 mb-6 text-xs border rounded-lg bg-background/50">
-              <div className="flex items-center gap-4 lg:gap-6">
-
-                <div className="flex items-center gap-1.5 text-muted-foreground">
-                  <Smartphone className="h-3 w-3 text-blue-500" />
-                  <span className="font-medium text-foreground">{totalProducts}</span>
-                  <span className="text-muted-foreground hidden sm:inline">produtos</span>
-                </div>
-
-                <div className="hidden md:block w-px h-3 bg-border"></div>
-
-                <button
-                  onClick={() => setShowSuppliersModal(true)}
-                  className="flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors cursor-pointer hover:bg-muted/50 rounded-md px-2 py-1"
-                >
-                  <Building className="h-3 w-3 text-green-500" />
-                  <span className="font-medium text-foreground">{totalSuppliers}</span>
-                  <span className="text-muted-foreground hidden sm:inline">fornecedores</span>
-                </button>
-
-                <div className="hidden md:block w-px h-3 bg-border"></div>
-
-                <div className="flex items-center">
-                  <div className="rounded-lg text-card-foreground w-full border-0 bg-transparent p-0 shadow-none text-xs">
-                    <div className="p-6 py-3 px-4">
-                      <div className="flex items-center gap-0.5 min-w-0 text-xs">
-                        <div className="flex items-center gap-0.5 flex-shrink-0">
-                          <DollarSign className="h-2.5 w-2.5 text-amber-500" />
-                        </div>
-                        <div className="flex items-center gap-0.5 min-w-0">
-                          <span className="text-xs font-bold text-foreground truncate max-w-[80px] sm:max-w-none">
-                            {liveDollarRate !== null ? `R$ ${liveDollarRate.toFixed(4).replace('.', ',')}` : <span className="text-muted-foreground animate-pulse">Carregando...</span>}
-                          </span>
-                          {liveDollarRate !== null && (
-                            <div className={`hidden sm:flex items-center gap-0.5 text-xs flex-shrink-0 ${liveDollarVariation >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                              <TrendingDown className={`h-2 w-2 ${liveDollarVariation >= 0 ? 'rotate-180' : ''}`} />
-                              <span className="font-medium text-xs">{liveDollarVariation >= 0 ? '+' : ''}{liveDollarVariation.toFixed(2).replace('.', ',')}%</span>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="hidden lg:block w-px h-3 bg-border"></div>
-
-                <div className="flex items-center">
-                  <div className="relative scale-75 origin-left">
-                    <div className="flex items-center gap-3 px-4 py-2.5 bg-gradient-to-r from-emerald-50 to-blue-50 dark:from-emerald-900/20 dark:to-blue-900/20 rounded-xl border border-emerald-200/50 dark:border-emerald-700/30 shadow-sm backdrop-blur-sm">
-                      <div className="flex items-center gap-2">
-                        <div className="relative">
-                          <Wifi className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
-                          <div className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-                        </div>
-                        <span className="text-sm font-semibold text-emerald-700 dark:text-emerald-300 tracking-wide">ONLINE</span>
-                      </div>
-                      <div className="w-px h-6 bg-gradient-to-b from-transparent via-gray-300 dark:via-gray-600 to-transparent"></div>
-                      <div className="flex items-center gap-2">
-                        <Clock className="h-4 w-4 text-blue-600 dark:text-blue-400" />
-                        <div className="flex flex-col">
-                          <div className="font-mono text-lg font-bold text-gray-900 dark:text-gray-100 leading-none tracking-wider">
-                            {new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
-                          </div>
-                          <div className="text-xs text-gray-600 dark:text-gray-400 font-medium leading-none mt-0.5">
-                            {new Date().toLocaleDateString('pt-BR', { weekday: 'short', day: '2-digit', month: '2-digit', year: 'numeric' })} (SP)
-                          </div>
-                        </div>
-                      </div>
-                      <div className="flex items-center">
-                        <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-ping"></div>
-                      </div>
-                    </div>
-                    <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/10 to-blue-500/10 rounded-xl blur-lg -z-10 opacity-60"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="md:hidden mb-2">
-              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-2 sm:p-3">
-                <div className="flex items-center justify-between flex-wrap gap-2">
-                  <div className="flex items-center gap-2 sm:gap-4">
-                    <div className="flex items-center gap-1 sm:gap-1.5">
-                      <Smartphone className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-blue-500" />
-                      <span className="text-xs sm:text-sm font-bold text-gray-900 dark:text-white">{totalProducts}</span>
-                      <span className="text-xs text-gray-500 hidden xs:inline">produtos</span>
-                    </div>
-                    <div className="w-px h-4 bg-gray-300 dark:bg-gray-600"></div>
-                    <button
-                      onClick={() => setShowSuppliersModal(true)}
-                      className="flex items-center gap-1 sm:gap-1.5 hover:bg-gray-50 dark:hover:bg-gray-700 rounded px-1.5 sm:px-2 py-1 transition-colors"
-                    >
-                      <Building className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-green-500" />
-                      <span className="text-xs sm:text-sm font-bold text-gray-900 dark:text-white">{totalSuppliers}</span>
-                      <span className="text-xs text-gray-500">forn.</span>
-                    </button>
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between mt-2 pt-2 border-t border-gray-100 dark:border-gray-700 overflow-x-auto">
-                  <div className="flex items-center gap-2 flex-1 min-w-0">
-
-                    <div className="relative scale-[0.65] sm:scale-75 origin-left flex-shrink-0">
-                      <div className="flex items-center gap-3 px-4 py-2.5 bg-gradient-to-r from-emerald-50 to-blue-50 dark:from-emerald-900/20 dark:to-blue-900/20 rounded-xl border border-emerald-200/50 dark:border-emerald-700/30 shadow-sm backdrop-blur-sm">
-                        <div className="flex items-center gap-2">
-                          <div className="relative">
-                            <Wifi className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
-                            <div className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-                          </div>
-                          <span className="text-sm font-semibold text-emerald-700 dark:text-emerald-300 tracking-wide">ONLINE</span>
-                        </div>
-                        <div className="w-px h-6 bg-gradient-to-b from-transparent via-gray-300 dark:via-gray-600 to-transparent"></div>
-                        <div className="flex items-center gap-2">
-                          <Clock className="h-4 w-4 text-blue-600 dark:text-blue-400" />
-                          <div className="flex flex-col">
-                            <div className="font-mono text-lg font-bold text-gray-900 dark:text-gray-100 leading-none tracking-wider">
-                              {new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
-                            </div>
-                          </div>
-                        </div>
-                        <div className="flex items-center">
-                          <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-ping"></div>
-                        </div>
-                      </div>
-                      <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/10 to-blue-500/10 rounded-xl blur-lg -z-10 opacity-60"></div>
-                    </div>
-
-                    <div className="flex items-center min-w-0 flex-shrink-0">
-                      <div className="rounded-lg text-card-foreground w-full border-0 bg-transparent p-0 shadow-none text-xs min-w-0">
-                        <div className="py-2 px-2 sm:py-3 sm:px-4">
-                          <div className="flex items-center gap-0.5 min-w-0 text-xs">
-                            <div className="flex items-center gap-0.5 flex-shrink-0">
-                              <DollarSign className="h-2 w-2 sm:h-2.5 sm:w-2.5 text-amber-500" />
-                            </div>
-                            <div className="flex items-center gap-0.5 min-w-0">
-                              <span className="text-[10px] sm:text-xs font-bold text-foreground truncate">
-                                {liveDollarRate !== null ? `R$ ${liveDollarRate.toFixed(4).replace('.', ',')}` : <span className="text-muted-foreground animate-pulse">Carregando...</span>}
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+          {/* Mobile: Banner First */}
+          <div className="lg:hidden animate-fade-up">
+            <BannerCarousel />
           </div>
 
-          <PartnerBanner />
+          {/* Top Section: Stats+Search (left) | Banner (right on desktop) */}
+          <div className="flex flex-col lg:flex-row gap-3 sm:gap-4 animate-fade-up">
+            {/* Left Panel */}
+            <div className="lg:w-[55%] flex flex-col gap-3 sm:gap-4">
+              {/* Stats Cards */}
+              <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 sm:gap-3">
+                {/* Produtos */}
+                <GlassCard padding="none" className="px-3 sm:px-4 py-2.5 sm:py-3 flex items-center gap-2 sm:gap-3">
+                  <div className="w-8 sm:w-9 h-8 sm:h-9 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <Package className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-[10px] sm:text-xs text-neutral-500 leading-none">Produtos</p>
+                    <p className="text-sm sm:text-base font-bold text-neutral-900 dark:text-white leading-tight mt-0.5">{totalProducts}</p>
+                  </div>
+                </GlassCard>
 
-          <div className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm shadow-lg rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                {/* Fornecedores */}
+                <GlassCard padding="none" className="px-3 sm:px-4 py-2.5 sm:py-3 flex items-center gap-2 sm:gap-3 cursor-pointer hover:-translate-y-0.5 hover:shadow-lg transition-all" onClick={() => setShowSuppliersModal(true)}>
+                  <div className="w-8 sm:w-9 h-8 sm:h-9 bg-green-500/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <Store className="h-4 w-4 sm:h-5 sm:w-5 text-green-600" />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-[10px] sm:text-xs text-neutral-500 leading-none">Fornecedores</p>
+                    <p className="text-sm sm:text-base font-bold text-neutral-900 dark:text-white leading-tight mt-0.5">{totalSuppliers}</p>
+                  </div>
+                </GlassCard>
 
-            <div className="sticky top-0 z-30 bg-white/95 dark:bg-gray-800/95 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 px-3 sm:px-4 lg:px-6 py-3 sm:py-4">
-              <SearchAutocomplete
+                {/* Dólar */}
+                <GlassCard padding="none" className="px-3 sm:px-4 py-2.5 sm:py-3 flex items-center gap-2 sm:gap-3">
+                  <div className="w-8 sm:w-9 h-8 sm:h-9 bg-amber-500/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <DollarSign className="h-4 w-4 sm:h-5 sm:w-5 text-amber-600" />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-[10px] sm:text-xs text-neutral-500 leading-none">Dólar</p>
+                    <div className="flex items-center gap-1.5 mt-0.5">
+                      <span className="text-sm sm:text-base font-bold text-neutral-900 dark:text-white leading-tight">
+                        {liveDollarRate !== null ? `R$ ${liveDollarRate.toFixed(4).replace('.', ',')}` : '...'}
+                      </span>
+                      {liveDollarRate !== null && (
+                        <span className={`text-[10px] sm:text-xs font-medium ${liveDollarVariation >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                          <TrendingDown className={`inline h-2.5 w-2.5 mr-0.5 ${liveDollarVariation >= 0 ? 'rotate-180' : ''}`} />
+                          {liveDollarVariation >= 0 ? '+' : ''}{liveDollarVariation.toFixed(2).replace('.', ',')}%
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </GlassCard>
+
+                {/* Online Status */}
+                <GlassCard padding="none" className="px-3 sm:px-4 py-2.5 sm:py-3 flex items-center gap-2 sm:gap-3">
+                  <div className="w-8 sm:w-9 h-8 sm:h-9 bg-emerald-500/10 rounded-lg flex items-center justify-center flex-shrink-0 relative">
+                    <Wifi className="h-4 w-4 sm:h-5 sm:w-5 text-emerald-600" />
+                    <div className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-[10px] sm:text-xs text-neutral-500 leading-none">Online</p>
+                    <div className="flex items-center gap-1.5 mt-0.5">
+                      <span className="text-sm sm:text-base font-bold text-emerald-600 leading-tight">
+                        {new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}
+                      </span>
+                      <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-ping"></div>
+                    </div>
+                  </div>
+                </GlassCard>
+              </div>
+
+              {/* Search Section */}
+              <GlassCard padding="none" className="overflow-hidden">
+                <div className="p-3 sm:p-4 lg:p-6">
+                  <SearchAutocomplete
                 value={searchTerm}
                 onChange={setSearchTerm}
                 onSelect={(text, type) => {
@@ -1242,9 +1194,13 @@ const Products = () => {
                   setDebouncedStorages([]);
                   setDebouncedRegions([]);
                   setDebouncedSuppliers([]);
-                  
+
                   setSearchTerm(text);
                   executeSearch(text);
+                }}
+                onCategorySelect={(categories) => {
+                  setSearchTerm('');
+                  setSelectedCategories(Array.isArray(categories) ? categories : [categories]);
                 }}
                 onClear={() => {
 
@@ -1264,68 +1220,73 @@ const Products = () => {
                 localProducts={products}
               />
             </div>
+          </GlassCard>
+            </div>
 
-            <div className="space-y-4 sm:space-y-6 p-2 sm:p-4 lg:p-6">
-              <div className="bg-card/50 backdrop-blur-sm rounded-xl border border-border/50 shadow-sm overflow-hidden relative z-10">
-                <div className="rounded-lg border bg-card text-card-foreground shadow-lg relative overflow-hidden">
+            {/* Right Panel - Desktop Only: Banner */}
+            <div className="hidden lg:flex lg:flex-1">
+              <BannerCarousel />
+            </div>
+          </div>
 
-                  <div className="flex justify-between items-center p-2 sm:p-3 lg:p-4 bg-gradient-to-r from-background/95 to-muted/10 border-b border-border/20 flex-wrap gap-2">
-                    <div className="flex items-center gap-1 sm:gap-1.5 text-muted-foreground">
-                      <Clock className="h-3 w-3 text-orange-500 flex-shrink-0" />
-                      <span className="text-[10px] sm:text-xs">
-                        <span className="text-muted-foreground mr-1 hidden sm:inline">Última atualização:</span>
-                        <span className="text-foreground font-medium">
-                          {new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
-                        </span>
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="flex items-center gap-1 sm:gap-2">
-                        <div className="flex items-center gap-1">
-                          <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-green-500 animate-pulse"></div>
-                          <span className="text-[10px] sm:text-xs text-muted-foreground">Online</span>
-                        </div>
-                      </div>
-                      {hasActiveFilters() && (
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={clearAllFilters}
-                          className="h-6 sm:h-7 px-1.5 sm:px-2 text-[10px] sm:text-xs rounded-md text-muted-foreground hover:text-foreground"
-                        >
-                          <X className="h-2.5 w-2.5 sm:h-3 sm:w-3 sm:mr-1" />
-                          <span className="hidden sm:inline">Limpar Filtros</span>
-                        </Button>
-                      )}
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => {
-                          setPage(1);
-                          fetchProducts();
+          <PartnerBanner />
 
-                        }}
-                        className="h-6 sm:h-7 px-1.5 sm:px-2 text-[10px] sm:text-xs rounded-md"
-                      >
-                        <RefreshCw className="h-2.5 w-2.5 sm:h-3 sm:w-3 sm:mr-1" />
-                        <span className="hidden sm:inline">Atualizar</span>
-                      </Button>
-                    </div>
-                  </div>
+          {/* Filters Section */}
+          <GlassCard padding="none" className="animate-fade-up delay-200 overflow-hidden">
+            {/* Filter Header */}
+            <div className="flex justify-between items-center p-3 sm:p-4 bg-neutral-50/50 border-b border-neutral-100 flex-wrap gap-2">
+              <div className="flex items-center gap-2">
+                <Filter className="h-3.5 w-3.5 text-neutral-500" />
+                <span className="text-xs sm:text-sm font-medium text-neutral-700 dark:text-neutral-300">Filtros</span>
+                {hasActiveFilters() && (
+                  <span className="text-[10px] sm:text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full font-medium">Ativos</span>
+                )}
+              </div>
+              <div className="flex items-center gap-2">
+                {hasActiveFilters() && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={clearAllFilters}
+                    className="h-7 px-2 text-xs text-neutral-500 hover:text-neutral-700"
+                  >
+                    <X className="h-3 w-3 mr-1" />
+                    Limpar
+                  </Button>
+                )}
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    setPage(1);
+                    fetchProducts();
+                  }}
+                  className="h-7 px-2 text-xs"
+                >
+                  <RefreshCw className="h-3 w-3 mr-1" />
+                  Atualizar
+                </Button>
+              </div>
+            </div>
 
-                  <div className={`transition-all duration-300 ease-in-out overflow-hidden ${showFilters ? 'block max-h-[2000px] opacity-100' : 'hidden max-h-0 opacity-0'}`}>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-2 sm:gap-3 p-2 sm:p-3 lg:p-4 bg-gradient-to-br from-gray-50 to-white dark:from-gray-800 dark:to-gray-700 transition-all duration-300 border-b border-border/20">
+            {/* Filter Grid */}
+            <div className={`transition-all duration-300 ease-in-out overflow-hidden ${showFilters ? 'block max-h-[2000px] opacity-100' : 'hidden max-h-0 opacity-0'}`}>
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3 p-3 sm:p-4 lg:p-5">
 
                       <div className="min-w-0">
-                        <label className="block text-[10px] sm:text-xs font-medium text-foreground mb-1 sm:mb-1.5">📅 Data</label>
-                        <DateFilter
+                        <label className="flex items-center gap-1 text-[10px] sm:text-xs font-medium text-neutral-600 mb-1.5">
+                          <Calendar className="h-3 w-3 text-neutral-400" /> Data
+                        </label>
+                        <DatePickerDropdown
                           selectedDate={selectedDate}
                           onDateChange={setSelectedDate}
                         />
                       </div>
 
                       <div className="min-w-0">
-                        <label className="block text-[10px] sm:text-xs font-medium text-foreground mb-1 sm:mb-1.5">🏷️ Categoria</label>
+                        <label className="flex items-center gap-1 text-[10px] sm:text-xs font-medium text-neutral-600 mb-1.5">
+                          <Smartphone className="h-3 w-3 text-neutral-400" /> Categoria
+                        </label>
                         <MultiSelectFilter
                           label="Categoria"
                           options={categories}
@@ -1336,7 +1297,9 @@ const Products = () => {
                       </div>
 
                       <div className="min-w-0">
-                        <label className="block text-[10px] sm:text-xs font-medium text-foreground mb-1 sm:mb-1.5">💾 Capacidade</label>
+                        <label className="flex items-center gap-1 text-[10px] sm:text-xs font-medium text-neutral-600 mb-1.5">
+                          <Cable className="h-3 w-3 text-neutral-400" /> Capacidade
+                        </label>
                         <MultiSelectFilter
                           label="Capacidade / MM"
                           options={storages}
@@ -1347,7 +1310,9 @@ const Products = () => {
                       </div>
 
                       <div className="min-w-0">
-                        <label className="block text-[10px] sm:text-xs font-medium text-foreground mb-1 sm:mb-1.5">🌍 Região</label>
+                        <label className="flex items-center gap-1 text-[10px] sm:text-xs font-medium text-neutral-600 mb-1.5">
+                          <Building className="h-3 w-3 text-neutral-400" /> Região
+                        </label>
                         <MultiSelectFilter
                           label="Região / GB-RAM"
                           options={regions}
@@ -1358,7 +1323,9 @@ const Products = () => {
                       </div>
 
                       <div className="min-w-0">
-                        <label className="block text-[10px] sm:text-xs font-medium text-foreground mb-1 sm:mb-1.5">🎨 Cor</label>
+                        <label className="flex items-center gap-1 text-[10px] sm:text-xs font-medium text-neutral-600 mb-1.5">
+                          Cor
+                        </label>
                         <MultiSelectFilter
                           label="Cor"
                           options={colors}
@@ -1370,7 +1337,9 @@ const Products = () => {
                       </div>
 
                       <div className="min-w-0">
-                        <label className="block text-[10px] sm:text-xs font-medium text-foreground mb-1 sm:mb-1.5">🏪 Fornecedor</label>
+                        <label className="flex items-center gap-1 text-[10px] sm:text-xs font-medium text-neutral-600 mb-1.5">
+                          <Store className="h-3 w-3 text-neutral-400" /> Fornecedor
+                        </label>
                         <MultiSelectFilter
                           label="Fornecedor"
                           options={{
@@ -1387,34 +1356,31 @@ const Products = () => {
                     </div>
                   </div>
 
-                  <div className="block md:hidden p-2 sm:p-3 lg:p-4 border-b border-border/20 bg-gradient-to-r from-muted/30 to-muted/10">
-                    <div className="relative group">
-                      <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-primary/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
-                      <Button
-                        variant="outline"
-                        onClick={() => setShowFilters(!showFilters)}
-                        className="w-full h-11 sm:h-12 hover:border-primary/50 shadow-lg hover:shadow-xl transition-all duration-200 rounded-xl backdrop-blur-sm font-medium bg-gradient-to-r from-primary/5 to-primary/10 border-primary/30"
-                      >
-                        <div className="flex items-center justify-center gap-2 sm:gap-3">
-                          <div className="p-1 sm:p-1.5 rounded-lg transition-colors duration-200 bg-primary/20 text-primary">
-                            <Filter className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                          </div>
-                          <span className="text-sm sm:text-base font-medium">
-                            {showFilters ? 'Ocultar Filtros' : 'Mostrar Filtros'}
-                          </span>
-                          <div className={`p-1 rounded-lg transition-all duration-200 bg-primary/20 text-primary ${showFilters ? 'rotate-180' : ''}`}>
-                            <ChevronDown className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                          </div>
-                        </div>
-                      </Button>
-                    </div>
-                  </div>
+            {/* Mobile Filter Toggle */}
+            <div className="block md:hidden p-3 sm:p-4 border-b border-neutral-100">
+              <Button
+                variant="outline"
+                onClick={() => setShowFilters(!showFilters)}
+                className="w-full h-10 rounded-xl border-neutral-200 hover:border-primary/50 transition-all"
+              >
+                <div className="flex items-center justify-center gap-2">
+                  <Filter className="h-4 w-4 text-neutral-500" />
+                  <span className="text-sm font-medium">
+                    {showFilters ? 'Ocultar Filtros' : 'Mostrar Filtros'}
+                  </span>
+                  <ChevronDown className={`h-4 w-4 text-neutral-400 transition-transform ${showFilters ? 'rotate-180' : ''}`} />
+                </div>
+              </Button>
+            </div>
+          </GlassCard>
 
-                  <div className="p-0 relative">
+          {/* Products Table */}
+          <GlassCard padding="none" className="animate-fade-up delay-300 overflow-hidden rounded-2xl">
+            <div className="relative">
 
                     {loading && (
-                      <div className="absolute inset-0 bg-white/50 dark:bg-gray-900/50 backdrop-blur-[2px] z-20 flex items-center justify-center">
-                        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 flex items-center gap-3 border border-gray-200 dark:border-gray-700">
+                      <div className="absolute inset-0 bg-white/50 dark:bg-neutral-900/50 backdrop-blur-[2px] z-20 flex items-center justify-center">
+                        <div className="glass-card rounded-lg shadow-lg p-4 flex items-center gap-3 border border-neutral-200/50 dark:border-white/10">
                           <Loader2 className="h-5 w-5 animate-spin text-primary" />
                           <span className="text-sm font-medium text-muted-foreground">Carregando...</span>
                         </div>
@@ -1423,11 +1389,11 @@ const Products = () => {
 
                     {filteredProducts.length === 0 && !loading ? (
                       <div className="text-center py-8 sm:py-12 px-4 sm:px-6">
-                        <div className="mx-auto h-16 w-16 sm:h-24 sm:w-24 text-gray-400 mb-3 sm:mb-4">
+                        <div className="mx-auto h-16 w-16 sm:h-24 sm:w-24 text-neutral-400 mb-3 sm:mb-4">
                           <Search className="h-full w-full" />
                         </div>
-                        <h3 className="text-base sm:text-lg font-medium text-gray-900 mb-2">Nenhum produto encontrado</h3>
-                        <p className="text-sm sm:text-base text-gray-500">
+                        <h3 className="text-base sm:text-lg font-medium text-neutral-900 dark:text-white mb-2">Nenhum produto encontrado</h3>
+                        <p className="text-sm sm:text-base text-neutral-500">
                           {searchTerm || hasActiveFilters() ? 'Tente ajustar seus filtros ou termo de busca.' : 'Não há produtos disponíveis no momento.'}
                         </p>
                       </div>
@@ -1436,9 +1402,9 @@ const Products = () => {
                         <div className="hidden md:block overflow-x-auto">
                           <div className="relative w-full overflow-auto">
                             <table className="w-full caption-bottom text-sm">
-                              <thead className="[&amp;_tr]:border-b">
-                                <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted bg-muted/50">
-                                  <th className="h-12 px-4 align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 cursor-pointer select-none hover:bg-muted/50 transition-colors text-left">
+                              <thead>
+                                <tr className="bg-neutral-50/80 border-b border-neutral-200/50">
+                                  <th className="h-11 px-4 align-middle font-medium text-neutral-500 text-xs cursor-pointer select-none hover:bg-neutral-100/50 transition-colors text-left">
                                     <div className="flex items-center gap-2 justify-start">
                                       <span className="font-bold text-foreground">Produto</span>
                                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-arrow-up-down h-4 w-4 opacity-50 group-hover:opacity-100">
@@ -1450,7 +1416,7 @@ const Products = () => {
                                     </div>
                                   </th>
                                   {!isSupplierHidden() && (
-                                    <th className="h-12 px-4 align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 cursor-pointer select-none hover:bg-muted/50 transition-colors text-center">
+                                    <th className="h-11 px-4 align-middle font-medium text-neutral-500 text-xs cursor-pointer select-none hover:bg-neutral-100/50 transition-colors text-center">
                                       <div className="flex items-center gap-2 justify-center">
                                         <span className="font-bold text-foreground">Fornecedor</span>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-arrow-up-down h-4 w-4 opacity-50 group-hover:opacity-100">
@@ -1462,7 +1428,7 @@ const Products = () => {
                                       </div>
                                     </th>
                                   )}
-                                  <th className="h-12 px-4 align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 cursor-pointer select-none hover:bg-muted/50 transition-colors text-center">
+                                  <th className="h-11 px-4 align-middle font-medium text-neutral-500 text-xs cursor-pointer select-none hover:bg-neutral-100/50 transition-colors text-center">
                                     <div className="flex items-center gap-2 justify-center">
                                       <span className="font-bold text-foreground">Storage</span>
                                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-arrow-up-down h-4 w-4 opacity-50 group-hover:opacity-100">
@@ -1473,7 +1439,7 @@ const Products = () => {
                                       </svg>
                                     </div>
                                   </th>
-                                  <th className="h-12 px-4 align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 cursor-pointer select-none hover:bg-muted/50 transition-colors text-center">
+                                  <th className="h-11 px-4 align-middle font-medium text-neutral-500 text-xs cursor-pointer select-none hover:bg-neutral-100/50 transition-colors text-center">
                                     <div className="flex items-center gap-2 justify-center">
                                       <span className="font-bold text-foreground">Cor</span>
                                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-arrow-up-down h-4 w-4 opacity-50 group-hover:opacity-100">
@@ -1484,7 +1450,7 @@ const Products = () => {
                                       </svg>
                                     </div>
                                   </th>
-                                  <th className="h-12 px-4 align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 cursor-pointer select-none hover:bg-muted/50 transition-colors text-center">
+                                  <th className="h-11 px-4 align-middle font-medium text-neutral-500 text-xs cursor-pointer select-none hover:bg-neutral-100/50 transition-colors text-center">
                                     <div className="flex items-center gap-2 justify-center">
                                       <span className="font-bold text-foreground">Categoria</span>
                                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-arrow-up-down h-4 w-4 opacity-50 group-hover:opacity-100">
@@ -1495,7 +1461,7 @@ const Products = () => {
                                       </svg>
                                     </div>
                                   </th>
-                                  <th className="h-12 px-4 align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 cursor-pointer select-none hover:bg-muted/50 transition-colors text-center">
+                                  <th className="h-11 px-4 align-middle font-medium text-neutral-500 text-xs cursor-pointer select-none hover:bg-neutral-100/50 transition-colors text-center">
                                     <div className="flex items-center gap-2 justify-center">
                                       <span className="font-bold text-foreground">Região</span>
                                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-arrow-up-down h-4 w-4 opacity-50 group-hover:opacity-100">
@@ -1506,7 +1472,7 @@ const Products = () => {
                                       </svg>
                                     </div>
                                   </th>
-                                  <th className="h-12 px-4 align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 cursor-pointer select-none hover:bg-muted/50 transition-colors text-right">
+                                  <th className="h-11 px-4 align-middle font-medium text-neutral-500 text-xs cursor-pointer select-none hover:bg-neutral-100/50 transition-colors text-right">
                                     <div className="flex items-center gap-2 justify-end">
                                       <span className="font-bold text-foreground">Preço</span>
                                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-arrow-up-down h-4 w-4 opacity-50 group-hover:opacity-100">
@@ -1519,10 +1485,10 @@ const Products = () => {
                                   </th>
                                 </tr>
                               </thead>
-                              <tbody className="[&amp;_tr:last-child]:border-0">
+                              <tbody>
                                 {paginatedProducts.map((product) => (
-                                  <tr key={product.id} className="border-b data-[state=selected]:bg-muted hover:bg-muted/50 transition-colors">
-                                    <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium">
+                                  <tr key={product.id} className="border-b border-neutral-100 hover:bg-white/50 transition-colors">
+                                    <td className="p-3 sm:p-4 align-middle font-medium">
                                       <div className="flex items-center gap-3">
                                         <div className="flex items-center">
                                           {getCategoryIcon(product.category, product.name, "h-4 w-4")}
@@ -1533,7 +1499,7 @@ const Products = () => {
                                       </div>
                                     </td>
                                     {!isSupplierHidden() && (
-                                      <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 text-center">
+                                      <td className="p-3 sm:p-4 align-middle text-center">
                                         <div className="flex flex-col items-center gap-2">
                                           <div className="flex flex-col items-center text-center">
                                             <div className="flex items-center gap-1">
@@ -1546,7 +1512,7 @@ const Products = () => {
                                                 className={`text-sm font-medium transition-colors touch-manipulation select-none ${
                                                   product.supplier?.whatsappNumber && isToday(selectedDate) && !isSupplierContactDisabled()
                                                     ? 'text-green-600 hover:text-green-700 hover:underline cursor-pointer'
-                                                    : 'text-gray-400 cursor-default pointer-events-none'
+                                                    : 'text-neutral-400 cursor-default pointer-events-none'
                                                   }`}
                                                 title={
                                                   isSupplierContactDisabled() 
@@ -1574,17 +1540,17 @@ const Products = () => {
                                         </div>
                                       </td>
                                     )}
-                                    <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 text-center">
+                                    <td className="p-3 sm:p-4 align-middle text-center">
                                       <div className="flex flex-col items-center gap-1">
                                         <div className="font-semibold text-sm">{product.storage || 'N/A'}</div>
                                       </div>
                                     </td>
-                                    <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 text-center">
+                                    <td className="p-3 sm:p-4 align-middle text-center">
                                       <div className="flex flex-col items-center gap-1">
                                         <div className="flex items-center gap-2 justify-center">
                                           {getColorHex(product.color) && (
                                             <div
-                                              className="w-4 h-4 rounded-full border-2 border-gray-300 shadow-sm"
+                                              className="w-4 h-4 rounded-full border-2 border-neutral-300 shadow-sm"
                                               style={{ backgroundColor: getColorHex(product.color) }}
                                               title={product.color || 'N/A'}
                                             ></div>
@@ -1593,17 +1559,17 @@ const Products = () => {
                                         </div>
                                       </div>
                                     </td>
-                                    <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 text-center">
+                                    <td className="p-3 sm:p-4 align-middle text-center">
                                       <div className="flex flex-col items-center gap-1">
                                         <div className="font-semibold text-sm">{product.category || 'N/A'}</div>
                                       </div>
                                     </td>
-                                    <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 text-center">
+                                    <td className="p-3 sm:p-4 align-middle text-center">
                                       <div className="flex flex-col items-center gap-1">
                                         <div className="font-semibold text-sm">{product.region || 'N/A'}</div>
                                       </div>
                                     </td>
-                                    <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 text-right">
+                                    <td className="p-3 sm:p-4 align-middle text-right">
                                       <div className="flex flex-col items-end gap-1">
                                         <div className={`relative inline-block duration-200 hover:shadow-sm active:scale-95 font-bold text-lg cursor-pointer hover:bg-primary/5 rounded px-2 py-1 transition-colors ${isLowestPrice(product, filteredProducts)
                                             ? 'text-green-600 dark:text-green-400'
@@ -1627,9 +1593,9 @@ const Products = () => {
                         </div>
 
                         <div className="block md:hidden">
-                          <div className="space-y-2 sm:space-y-3 p-2 sm:p-3">
+                          <div className="space-y-2 sm:space-y-3 p-3 sm:p-4">
                             {paginatedProducts.map((product) => (
-                              <div key={product.id} className="rounded-lg bg-card text-card-foreground overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200 border border-border/50">
+                              <div key={product.id} className="p-0 bg-white rounded-xl border border-neutral-200 shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden">
                                 <div className="p-0">
                                   <div className="bg-gradient-to-r from-primary/5 to-primary/10 px-3 sm:px-4 py-2 sm:py-3 border-b border-border/30">
                                     <div className="flex items-center justify-between gap-2">
@@ -1660,14 +1626,14 @@ const Products = () => {
                                   <div className="px-3 sm:px-4 py-2 sm:py-3 space-y-1.5 sm:space-y-2">
                                     <div className="flex items-center justify-between py-0.5 sm:py-1">
                                       <span className="text-xs sm:text-sm text-muted-foreground">Storage:</span>
-                                      <div className="inline-flex items-center rounded-full border px-2 sm:px-2.5 py-0.5 transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-[10px] sm:text-xs font-medium bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300">{product.storage || 'N/A'}</div>
+                                      <div className="inline-flex items-center rounded-full border px-2 sm:px-2.5 py-0.5 transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-[10px] sm:text-xs font-medium bg-neutral-100 text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300">{product.storage || 'N/A'}</div>
                                     </div>
                                     <div className="flex items-center justify-between py-0.5 sm:py-1">
                                       <span className="text-xs sm:text-sm text-muted-foreground">Cor:</span>
                                       <div className="flex items-center gap-2">
                                         {getColorHex(product.color) && (
                                           <div
-                                            className="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full border-2 border-gray-300 shadow-sm flex-shrink-0"
+                                            className="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full border-2 border-neutral-300 shadow-sm flex-shrink-0"
                                             style={{ backgroundColor: getColorHex(product.color) }}
                                             title={product.color || 'N/A'}
                                           ></div>
@@ -1691,7 +1657,7 @@ const Products = () => {
                                           className={`text-xs sm:text-sm font-medium truncate max-w-[150px] ${
                                             product.supplier?.whatsappNumber && isToday(selectedDate) && !isSupplierContactDisabled()
                                               ? 'text-green-600 hover:text-green-700 hover:underline cursor-pointer'
-                                              : 'text-gray-700 dark:text-gray-300 cursor-default pointer-events-none'
+                                              : 'text-neutral-700 dark:text-neutral-300 cursor-default pointer-events-none'
                                             }`}
                                           title={
                                             isSupplierContactDisabled() 
@@ -1721,7 +1687,7 @@ const Products = () => {
                                           </button>
                                         )}
                                         {product.supplier?.whatsappNumber && isToday(selectedDate) && isSupplierContactDisabled() && (
-                                          <div className="inline-flex items-center gap-1.5 sm:gap-2 whitespace-nowrap rounded-md text-xs sm:text-sm h-9 sm:h-10 px-3 sm:px-4 py-2 w-full justify-center bg-gray-400 text-white font-medium cursor-not-allowed opacity-60">
+                                          <div className="inline-flex items-center gap-1.5 sm:gap-2 whitespace-nowrap rounded-md text-xs sm:text-sm h-9 sm:h-10 px-3 sm:px-4 py-2 w-full justify-center bg-neutral-400 text-white font-medium cursor-not-allowed opacity-60">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-message-circle h-3.5 w-3.5 sm:h-4 sm:w-4">
                                               <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path>
                                             </svg>
@@ -1729,7 +1695,7 @@ const Products = () => {
                                           </div>
                                         )}
                                         {product.supplier?.whatsappNumber && !isToday(selectedDate) && (
-                                          <div className="inline-flex items-center gap-1.5 sm:gap-2 whitespace-nowrap rounded-md text-xs sm:text-sm h-9 sm:h-10 px-3 sm:px-4 py-2 w-full justify-center bg-gray-400 text-white font-medium cursor-not-allowed opacity-60">
+                                          <div className="inline-flex items-center gap-1.5 sm:gap-2 whitespace-nowrap rounded-md text-xs sm:text-sm h-9 sm:h-10 px-3 sm:px-4 py-2 w-full justify-center bg-neutral-400 text-white font-medium cursor-not-allowed opacity-60">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-message-circle h-3.5 w-3.5 sm:h-4 sm:w-4">
                                               <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path>
                                             </svg>
@@ -1746,17 +1712,18 @@ const Products = () => {
                           </div>
                         </div>
 
-                        <div className="flex flex-col sm:flex-row items-center justify-between px-3 sm:px-4 lg:px-6 py-3 sm:py-4 border-t border-border/50 gap-3">
+                        {/* Pagination */}
+                        <div className="flex flex-col sm:flex-row items-center justify-between px-4 sm:px-6 py-3 sm:py-4 border-t border-neutral-100 gap-3 bg-neutral-50/30">
 
                           <div className="flex items-center gap-3 sm:gap-4">
-                            <div className="text-xs sm:text-sm text-muted-foreground">
+                            <div className="text-xs sm:text-sm text-neutral-500">
                               {totalProducts} {totalProducts === 1 ? 'produto' : 'produtos'}
-                              {hasActiveFilters() && <span className="text-primary"> (filtrado)</span>}
+                              {hasActiveFilters() && <span className="text-primary font-medium"> (filtrado)</span>}
                             </div>
                             <div className="flex items-center gap-2">
-                              <span className="text-xs text-muted-foreground">Por página:</span>
+                              <span className="text-xs text-neutral-500">Por página:</span>
                               <select
-                                className="h-7 px-2 text-xs bg-background border border-border rounded-md focus:outline-none focus:ring-1 focus:ring-primary transition-colors cursor-pointer"
+                                className="h-8 px-2 text-xs bg-white border border-neutral-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors cursor-pointer"
                                 value={itemsPerPage}
                                 onChange={(e) => setItemsPerPage(Number(e.target.value))}
                               >
@@ -1775,19 +1742,19 @@ const Products = () => {
                               size="sm"
                               disabled={page === 1}
                               onClick={() => setPage(prev => Math.max(1, prev - 1))}
-                              className="h-8 px-3 text-xs"
+                              className="h-8 px-4 text-xs rounded-lg border-neutral-200"
                             >
                               Anterior
                             </Button>
-                            <span className="text-xs font-medium px-2 min-w-[60px] text-center">
-                              Página {page} de {totalPages}
+                            <span className="text-xs font-medium px-3 min-w-[60px] text-center text-neutral-700">
+                              {page} / {totalPages}
                             </span>
                             <Button
                               variant="outline"
                               size="sm"
                               disabled={page >= totalPages}
                               onClick={() => setPage(prev => prev + 1)}
-                              className="h-8 px-3 text-xs"
+                              className="h-8 px-4 text-xs rounded-lg border-neutral-200"
                             >
                               <span className="hidden sm:inline">Próxima</span>
                               <span className="sm:hidden">Prox.</span>
@@ -1796,12 +1763,8 @@ const Products = () => {
                         </div>
                       </>
                     )}
-                  </div>
-                </div>
-              </div>
             </div>
-          </div>
-        </div>
+          </GlassCard>
       </div>
 
       <SuppliersModal

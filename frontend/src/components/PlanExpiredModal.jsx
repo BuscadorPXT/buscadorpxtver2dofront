@@ -57,7 +57,7 @@ const PlanExpiredModal = ({ open, onOpenChange }) => {
       <DialogContent className="sm:max-w-[90vw] lg:max-w-6xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <div className="mb-4">
-            <DialogTitle className="text-2xl font-bold text-gray-900 dark:text-white">
+            <DialogTitle className="text-2xl font-bold text-neutral-900 dark:text-white">
               Seu tempo acabou
             </DialogTitle>
             <DialogDescription className="text-base mt-2">
@@ -69,13 +69,13 @@ const PlanExpiredModal = ({ open, onOpenChange }) => {
         {loading ? (
           <div className="flex items-center justify-center py-16">
             <div className="text-center">
-              <div className="animate-spin rounded-full h-10 w-10 border-2 border-gray-300 border-t-blue-600 mx-auto mb-4"></div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Carregando planos...</p>
+              <div className="animate-spin rounded-full h-10 w-10 border-2 border-neutral-300 border-t-primary mx-auto mb-4"></div>
+              <p className="text-sm text-neutral-600 dark:text-neutral-400">Carregando planos...</p>
             </div>
           </div>
         ) : plans.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-gray-600 dark:text-gray-400">Nenhum plano disponível no momento.</p>
+            <p className="text-neutral-600 dark:text-neutral-400">Nenhum plano disponível no momento.</p>
           </div>
         ) : (
           <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3 mt-4">
@@ -94,9 +94,9 @@ const PlanExpiredModal = ({ open, onOpenChange }) => {
                 
                 <CardContent className="space-y-4">
 
-                  <div className="text-center py-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
+                  <div className="text-center py-3 bg-neutral-50 dark:bg-neutral-800/50 rounded-lg">
                     <div className="flex items-baseline justify-center gap-1">
-                      <span className="text-3xl font-bold text-gray-900 dark:text-white">
+                      <span className="text-3xl font-bold text-neutral-900 dark:text-white">
                         {parseFloat(plan.price).toLocaleString('pt-BR', {
                           style: 'currency',
                           currency: 'BRL'
@@ -105,7 +105,7 @@ const PlanExpiredModal = ({ open, onOpenChange }) => {
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+                  <div className="flex items-center justify-center gap-2 text-sm text-neutral-600 dark:text-neutral-400">
                     <Clock className="h-4 w-4" />
                     <span className="font-medium">{formatDuration(plan)} de uso</span>
                   </div>
@@ -115,7 +115,7 @@ const PlanExpiredModal = ({ open, onOpenChange }) => {
                       {plan.features.map((feature, index) => (
                         <li key={index} className="flex items-start gap-2 text-sm">
                           <Check className="h-4 w-4 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" />
-                          <span className="text-gray-700 dark:text-gray-300">{feature}</span>
+                          <span className="text-neutral-700 dark:text-neutral-300">{feature}</span>
                         </li>
                       ))}
                     </ul>

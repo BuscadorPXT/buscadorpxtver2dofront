@@ -149,7 +149,7 @@ const SupplierPriorityManager = () => {
     
     const colors = {
       1: 'bg-yellow-500 text-white',
-      2: 'bg-gray-400 text-white',
+      2: 'bg-neutral-400 text-white',
       3: 'bg-orange-600 text-white',
     };
 

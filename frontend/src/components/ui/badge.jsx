@@ -21,6 +21,18 @@ const badgeVariants = cva(
           "border-transparent bg-green-500 text-white [a&]:hover:bg-green-600 dark:bg-green-600 dark:[a&]:hover:bg-green-700",
         warning:
           "border-transparent bg-yellow-500 text-white [a&]:hover:bg-yellow-600 dark:bg-yellow-600 dark:[a&]:hover:bg-yellow-700",
+        lime:
+          "border-transparent bg-lime-500 text-white [a&]:hover:bg-lime-600",
+        limeSubtle:
+          "border-transparent bg-lime-50 text-lime-700 dark:bg-lime-950/30 dark:text-lime-400 [a&]:hover:bg-lime-100",
+        statusLime:
+          "border border-lime-200 bg-lime-50 text-lime-700 dark:border-lime-800 dark:bg-lime-950/30 dark:text-lime-400 rounded-full",
+        statusSuccess:
+          "border border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-800 dark:bg-emerald-950/30 dark:text-emerald-400 rounded-full",
+        statusWarning:
+          "border border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-800 dark:bg-amber-950/30 dark:text-amber-400 rounded-full",
+        statusError:
+          "border border-red-200 bg-red-50 text-red-700 dark:border-red-800 dark:bg-red-950/30 dark:text-red-400 rounded-full",
       },
     },
     defaultVariants: {

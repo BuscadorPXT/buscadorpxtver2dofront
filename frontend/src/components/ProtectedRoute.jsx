@@ -147,10 +147,10 @@ const ProtectedRoute = ({ children }) => {
 
   if (loading || (checkingAccess && !isExemptRoute)) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800">
+      <div className="min-h-screen flex items-center justify-center bg-neutral-50 dark:bg-neutral-950">
         <div className="text-center">
-          <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-blue-600" />
-          <p className="text-gray-600 dark:text-gray-300">Verificando acesso...</p>
+          <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-primary" />
+          <p className="text-neutral-600 dark:text-neutral-300">Verificando acesso...</p>
         </div>
       </div>
     );

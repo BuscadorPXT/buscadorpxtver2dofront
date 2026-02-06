@@ -769,7 +769,7 @@ const Subscriptions = () => {
                   id="useCustomDates"
                   checked={useCustomDates}
                   onChange={(e) => setUseCustomDates(e.target.checked)}
-                  className="h-4 w-4 rounded border-gray-300"
+                  className="h-4 w-4 rounded border-neutral-300"
                 />
                 <Label htmlFor="useCustomDates" className="text-sm font-medium cursor-pointer">
                   Definir datas manualmente
@@ -877,7 +877,7 @@ const Subscriptions = () => {
                 id="useCustomDatesRenew"
                 checked={useCustomDatesRenew}
                 onChange={(e) => setUseCustomDatesRenew(e.target.checked)}
-                className="rounded border-gray-300 cursor-pointer"
+                className="rounded border-neutral-300 cursor-pointer"
               />
               <Label htmlFor="useCustomDatesRenew" className="cursor-pointer">
                 Especificar data de início e fim

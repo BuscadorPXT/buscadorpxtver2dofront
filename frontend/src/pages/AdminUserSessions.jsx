@@ -69,12 +69,12 @@ export default function AdminUserSessions() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gray-50">
+            <div className="min-h-screen bg-neutral-50">
                 <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
                     <div className="flex items-center justify-center h-96">
                         <div className="text-center">
-                            <RefreshCw className="w-12 h-12 animate-spin text-gray-400 mx-auto mb-4" />
-                            <p className="text-gray-600">Carregando sessões...</p>
+                            <RefreshCw className="w-12 h-12 animate-spin text-neutral-400 mx-auto mb-4" />
+                            <p className="text-neutral-600">Carregando sessões...</p>
                         </div>
                     </div>
                 </div>
@@ -83,29 +83,29 @@ export default function AdminUserSessions() {
     }
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-neutral-50">
             <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
 
                 <div className="mb-6 sm:mb-8">
                     <button
                         onClick={() => navigate('/admin/users')}
-                        className="flex items-center space-x-2 text-gray-600 hover:text-gray-900 mb-6"
+                        className="flex items-center space-x-2 text-neutral-600 hover:text-neutral-900 mb-6"
                     >
                         <ArrowLeft className="w-5 h-5" />
                         <span>Voltar para usuários</span>
                     </button>
 
-                    <div className="bg-white rounded-lg shadow border border-gray-200 p-6 sm:p-8">
+                    <div className="bg-white rounded-lg shadow border border-neutral-200 p-6 sm:p-8">
                         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                             <div className="flex items-center space-x-4">
-                                <div className="p-3 bg-gray-100 rounded-lg">
-                                    <Shield className="w-8 h-8 text-gray-700" />
+                                <div className="p-3 bg-neutral-100 rounded-lg">
+                                    <Shield className="w-8 h-8 text-neutral-700" />
                                 </div>
                                 <div>
-                                    <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
+                                    <h1 className="text-2xl sm:text-3xl font-bold text-neutral-900">
                                         Sessões do Usuário
                                     </h1>
-                                    <p className="text-sm text-gray-500 mt-1">User ID: <span className="font-medium text-gray-700">#{userId}</span></p>
+                                    <p className="text-sm text-neutral-500 mt-1">User ID: <span className="font-medium text-neutral-700">#{userId}</span></p>
                                 </div>
                             </div>
 
@@ -113,7 +113,7 @@ export default function AdminUserSessions() {
                                 <button
                                     onClick={handleRemoveAllSessions}
                                     disabled={removing === 'all'}
-                                    className="flex items-center justify-center space-x-2 px-5 py-2.5 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                                    className="flex items-center justify-center space-x-2 px-5 py-2.5 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:bg-neutral-400 disabled:cursor-not-allowed"
                                 >
                                     {removing === 'all' ? (
                                         <RefreshCw className="w-5 h-5 animate-spin" />
@@ -141,38 +141,38 @@ export default function AdminUserSessions() {
                 )}
 
                 <div className="mb-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <div className="bg-white p-6 rounded-lg shadow border border-gray-200">
+                    <div className="bg-white p-6 rounded-lg shadow border border-neutral-200">
                         <div className="flex items-center justify-between mb-2">
-                            <p className="text-sm text-gray-600">Sessões Ativas</p>
-                            <Wifi className="w-5 h-5 text-gray-400" />
+                            <p className="text-sm text-neutral-600">Sessões Ativas</p>
+                            <Wifi className="w-5 h-5 text-neutral-400" />
                         </div>
-                        <p className="text-3xl font-bold text-gray-900">{sessions.length}</p>
-                        <p className="text-xs text-gray-500 mt-1">dispositivo{sessions.length !== 1 ? 's' : ''} conectado{sessions.length !== 1 ? 's' : ''}</p>
+                        <p className="text-3xl font-bold text-neutral-900">{sessions.length}</p>
+                        <p className="text-xs text-neutral-500 mt-1">dispositivo{sessions.length !== 1 ? 's' : ''} conectado{sessions.length !== 1 ? 's' : ''}</p>
                     </div>
 
-                    <div className="bg-white p-6 rounded-lg shadow border border-gray-200">
+                    <div className="bg-white p-6 rounded-lg shadow border border-neutral-200">
                         <div className="flex items-center justify-between mb-2">
-                            <p className="text-sm text-gray-600">IPs Únicos</p>
-                            <TrendingUp className="w-5 h-5 text-gray-400" />
+                            <p className="text-sm text-neutral-600">IPs Únicos</p>
+                            <TrendingUp className="w-5 h-5 text-neutral-400" />
                         </div>
-                        <p className="text-3xl font-bold text-gray-900">
+                        <p className="text-3xl font-bold text-neutral-900">
                             {new Set(sessions.map((s) => s.ipAddress)).size}
                         </p>
-                        <p className="text-xs text-gray-500 mt-1">endereço{new Set(sessions.map((s) => s.ipAddress)).size !== 1 ? 's' : ''} diferente{new Set(sessions.map((s) => s.ipAddress)).size !== 1 ? 's' : ''}</p>
+                        <p className="text-xs text-neutral-500 mt-1">endereço{new Set(sessions.map((s) => s.ipAddress)).size !== 1 ? 's' : ''} diferente{new Set(sessions.map((s) => s.ipAddress)).size !== 1 ? 's' : ''}</p>
                     </div>
 
-                    <div className="bg-white p-6 rounded-lg shadow border border-gray-200 sm:col-span-2 lg:col-span-1">
+                    <div className="bg-white p-6 rounded-lg shadow border border-neutral-200 sm:col-span-2 lg:col-span-1">
                         <div className="flex items-center justify-between h-full">
                             <div>
-                                <p className="text-sm text-gray-600">Atualizar dados</p>
-                                <p className="text-xs text-gray-500 mt-1">Recarregar lista</p>
+                                <p className="text-sm text-neutral-600">Atualizar dados</p>
+                                <p className="text-xs text-neutral-500 mt-1">Recarregar lista</p>
                             </div>
                             <button
                                 onClick={loadSessions}
-                                className="p-3 bg-gray-100 hover:bg-gray-200 rounded-lg"
+                                className="p-3 bg-neutral-100 hover:bg-neutral-200 rounded-lg"
                                 title="Atualizar lista"
                             >
-                                <RefreshCw className="w-6 h-6 text-gray-700" />
+                                <RefreshCw className="w-6 h-6 text-neutral-700" />
                             </button>
                         </div>
                     </div>
@@ -180,12 +180,12 @@ export default function AdminUserSessions() {
 
                 <div className="space-y-4">
                     {sessions.length === 0 ? (
-                        <div className="text-center py-16 bg-white rounded-lg shadow border border-gray-200">
-                            <div className="p-4 bg-gray-100 rounded-full w-20 h-20 mx-auto mb-4 flex items-center justify-center">
-                                <Shield className="w-10 h-10 text-gray-400" />
+                        <div className="text-center py-16 bg-white rounded-lg shadow border border-neutral-200">
+                            <div className="p-4 bg-neutral-100 rounded-full w-20 h-20 mx-auto mb-4 flex items-center justify-center">
+                                <Shield className="w-10 h-10 text-neutral-400" />
                             </div>
-                            <p className="text-lg font-semibold text-gray-900 mb-2">Nenhuma sessão ativa</p>
-                            <p className="text-sm text-gray-500">O usuário não está conectado em nenhum dispositivo</p>
+                            <p className="text-lg font-semibold text-neutral-900 mb-2">Nenhuma sessão ativa</p>
+                            <p className="text-sm text-neutral-500">O usuário não está conectado em nenhum dispositivo</p>
                         </div>
                     ) : (
                         sessions.map((session) => (

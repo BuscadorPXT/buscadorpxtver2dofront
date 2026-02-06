@@ -104,7 +104,7 @@ const PartnerBanner = () => {
                 className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-lg transition-all opacity-0 group-hover:opacity-100"
                 aria-label="Banner anterior"
               >
-                <ChevronLeft className="h-5 w-5 text-gray-800" />
+                <ChevronLeft className="h-5 w-5 text-neutral-800" />
               </button>
 
               <button
@@ -112,7 +112,7 @@ const PartnerBanner = () => {
                 className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-lg transition-all opacity-0 group-hover:opacity-100"
                 aria-label="Próximo banner"
               >
-                <ChevronRight className="h-5 w-5 text-gray-800" />
+                <ChevronRight className="h-5 w-5 text-neutral-800" />
               </button>
 
               <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">

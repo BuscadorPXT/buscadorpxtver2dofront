@@ -82,7 +82,7 @@ const HoursDisplay = () => {
       <div className={`flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/10 border transition-all duration-300 ${
         isUpdating 
           ? 'border-blue-500 shadow-lg shadow-blue-500/20 scale-105' 
-          : 'border-gray-700'
+          : 'border-neutral-700'
       }`}>
         <Clock className={`h-4 w-4 transition-colors duration-300 ${
           isCritical ? 'text-red-400' : isLow ? 'text-yellow-400' : 'text-green-400'
@@ -93,7 +93,7 @@ const HoursDisplay = () => {
           }`}>
             {daysRemaining} {daysRemaining === 1 ? 'dia' : 'dias'}
           </span>
-          <span className="text-[10px] text-gray-400">
+          <span className="text-[10px] text-neutral-400">
             restante{daysRemaining !== 1 ? 's' : ''}
           </span>
         </div>
@@ -109,7 +109,7 @@ const HoursDisplay = () => {
     <div className={`flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/10 border transition-all duration-300 ${
       isUpdating 
         ? 'border-blue-500 shadow-lg shadow-blue-500/20 scale-105' 
-        : 'border-gray-700'
+        : 'border-neutral-700'
     }`}>
       <Clock className={`h-4 w-4 transition-colors duration-300 ${
         isCritical ? 'text-red-400' : isLow ? 'text-yellow-400' : 'text-green-400'
@@ -120,7 +120,7 @@ const HoursDisplay = () => {
         }`}>
           {formatHoursToTime(hours.remaining)} restantes
         </span>
-        <span className="text-[10px] text-gray-400">
+        <span className="text-[10px] text-neutral-400">
           de {formatHoursToTime(hours.available)} totais
         </span>
       </div>

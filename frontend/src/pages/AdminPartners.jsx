@@ -216,7 +216,7 @@ const AdminPartners = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
+    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950">
       <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 py-4 sm:py-6 lg:py-8">
         
         <div className="mb-4 sm:mb-6">
@@ -227,10 +227,10 @@ const AdminPartners = () => {
             </Link>
           </Button>
           
-          <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-1 sm:mb-2">
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-neutral-900 mb-1 sm:mb-2">
             Gerenciamento de Parceiros
           </h1>
-          <p className="text-sm sm:text-base text-gray-600">
+          <p className="text-sm sm:text-base text-neutral-600">
             Configure banners de divulgação dos parceiros do sistema
           </p>
         </div>
@@ -254,8 +254,8 @@ const AdminPartners = () => {
           <CardContent>
             {partners.length === 0 ? (
               <div className="text-center py-12">
-                <Image className="h-12 w-12 mx-auto mb-4 text-gray-400" />
-                <p className="text-gray-500 text-sm">Nenhum parceiro cadastrado</p>
+                <Image className="h-12 w-12 mx-auto mb-4 text-neutral-400" />
+                <p className="text-neutral-500 text-sm">Nenhum parceiro cadastrado</p>
                 <Button 
                   onClick={() => handleOpenPartnerDialog()} 
                   variant="outline" 
@@ -267,10 +267,10 @@ const AdminPartners = () => {
             ) : (
               <div className="space-y-4">
                 {partners.map((partner) => (
-                  <Card key={partner.id} className="border-gray-200">
+                  <Card key={partner.id} className="border-neutral-200">
                     <CardContent className="p-4">
                       <div className="flex flex-col sm:flex-row gap-4">
-                        <div className="w-full sm:w-40 h-40 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
+                        <div className="w-full sm:w-40 h-40 bg-neutral-100 rounded-lg overflow-hidden flex-shrink-0">
                           {partner.imageUrl ? (
                             <img
                               src={partner.imageUrl}
@@ -278,7 +278,7 @@ const AdminPartners = () => {
                               className="w-full h-full object-cover"
                             />
                           ) : (
-                            <div className="w-full h-full flex items-center justify-center text-gray-400">
+                            <div className="w-full h-full flex items-center justify-center text-neutral-400">
                               <Image className="h-10 w-10" />
                             </div>
                           )}
@@ -292,7 +292,7 @@ const AdminPartners = () => {
                                 <Badge variant={partner.isActive ? "default" : "secondary"}>
                                   {partner.isActive ? 'Ativo' : 'Inativo'}
                                 </Badge>
-                                <span className="text-xs text-gray-500">
+                                <span className="text-xs text-neutral-500">
                                   Ordem: {partner.displayOrder}
                                 </span>
                               </div>
@@ -338,7 +338,7 @@ const AdminPartners = () => {
                           </div>
 
                           <div className="space-y-2 text-sm">
-                            <div className="flex items-center gap-2 text-gray-600">
+                            <div className="flex items-center gap-2 text-neutral-600">
                               <ExternalLink className="h-4 w-4 flex-shrink-0" />
                               <a
                                 href={partner.redirectUrl}
@@ -350,7 +350,7 @@ const AdminPartners = () => {
                               </a>
                             </div>
                             {(partner.startDate || partner.endDate) && (
-                              <div className="text-xs text-gray-500">
+                              <div className="text-xs text-neutral-500">
                                 {partner.startDate && `Início: ${new Date(partner.startDate).toLocaleDateString('pt-BR')}`}
                                 {partner.startDate && partner.endDate && ' - '}
                                 {partner.endDate && `Fim: ${new Date(partner.endDate).toLocaleDateString('pt-BR')}`}
@@ -402,19 +402,19 @@ const AdminPartners = () => {
                   />
                 </div>
               </div>
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-neutral-500">
                 Formatos: JPG, PNG, WebP, GIF (máx. 5MB). Upload será feito ao salvar.
               </p>
               
               {uploadingImage && (
                 <div className="mt-3 space-y-2">
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-600">Fazendo upload...</span>
+                    <span className="text-neutral-600">Fazendo upload...</span>
                     <span className="font-medium">{uploadProgress}%</span>
                   </div>
-                  <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+                  <div className="w-full h-2 bg-neutral-200 rounded-full overflow-hidden">
                     <div 
-                      className="h-full bg-blue-600 transition-all duration-300 ease-out"
+                      className="h-full bg-primary transition-all duration-300 ease-out"
                       style={{ width: `${uploadProgress}%` }}
                     />
                   </div>
@@ -422,7 +422,7 @@ const AdminPartners = () => {
               )}
               
               {(imagePreview || partnerFormData.imageUrl) && !uploadingImage && (
-                <div className="mt-2 w-full h-48 bg-gray-100 rounded-lg overflow-hidden border-2 border-dashed border-gray-300">
+                <div className="mt-2 w-full h-48 bg-neutral-100 rounded-lg overflow-hidden border-2 border-dashed border-neutral-300">
                   <img
                     src={imagePreview || partnerFormData.imageUrl}
                     alt="Preview"

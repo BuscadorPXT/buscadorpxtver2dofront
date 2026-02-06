@@ -320,12 +320,12 @@ const AdminPanel = () => {
   const inactiveUsers = filteredUsers.filter(u => !u.isActive);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
+    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950">
       <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 py-4 sm:py-6 lg:py-8">
 
         <div className="mb-4 sm:mb-6 lg:mb-8">
-          <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-1 sm:mb-2">Painel Administrativo</h1>
-          <p className="text-sm sm:text-base text-gray-600">Gerencie usuários e permissões do sistema</p>
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-neutral-900 mb-1 sm:mb-2">Painel Administrativo</h1>
+          <p className="text-sm sm:text-base text-neutral-600">Gerencie usuários e permissões do sistema</p>
         </div>
 
         {message && (
@@ -337,7 +337,7 @@ const AdminPanel = () => {
         <Card className="mb-4 sm:mb-6">
           <CardContent className="">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-neutral-400" />
               <Input
                 type="text"
                 placeholder="Buscar usuários..."
@@ -347,7 +347,7 @@ const AdminPanel = () => {
               />
             </div>
             {searchTerm && (
-              <p className="text-xs sm:text-sm text-gray-600 mt-2">
+              <p className="text-xs sm:text-sm text-neutral-600 mt-2">
                 Encontrados: {filteredUsers.length} usuário(s)
               </p>
             )}
@@ -358,9 +358,9 @@ const AdminPanel = () => {
           <Card>
             <CardContent className="pt-3 sm:pt-4 lg:pt-6 p-3 sm:p-4 lg:p-6">
               <div className="flex flex-col sm:flex-row items-start sm:items-center">
-                <Users className="h-6 w-6 sm:h-7 sm:w-7 lg:h-8 lg:w-8 text-blue-600 mb-2 sm:mb-0" />
+                <Users className="h-6 w-6 sm:h-7 sm:w-7 lg:h-8 lg:w-8 text-primary mb-2 sm:mb-0" />
                 <div className="sm:ml-3 lg:ml-4">
-                  <p className="text-[10px] sm:text-xs lg:text-sm font-medium text-gray-600">Total</p>
+                  <p className="text-[10px] sm:text-xs lg:text-sm font-medium text-neutral-600">Total</p>
                   <p className="text-lg sm:text-xl lg:text-2xl font-bold">{users.length}</p>
                 </div>
               </div>
@@ -372,7 +372,7 @@ const AdminPanel = () => {
               <div className="flex flex-col sm:flex-row items-start sm:items-center">
                 <CheckCircle className="h-6 w-6 sm:h-7 sm:w-7 lg:h-8 lg:w-8 text-green-600 mb-2 sm:mb-0" />
                 <div className="sm:ml-3 lg:ml-4">
-                  <p className="text-[10px] sm:text-xs lg:text-sm font-medium text-gray-600">Aprovados</p>
+                  <p className="text-[10px] sm:text-xs lg:text-sm font-medium text-neutral-600">Aprovados</p>
                   <p className="text-lg sm:text-xl lg:text-2xl font-bold">{users.filter(u => u.isApproved).length}</p>
                 </div>
               </div>
@@ -384,7 +384,7 @@ const AdminPanel = () => {
               <div className="flex flex-col sm:flex-row items-start sm:items-center">
                 <XCircle className="h-6 w-6 sm:h-7 sm:w-7 lg:h-8 lg:w-8 text-orange-600 mb-2 sm:mb-0" />
                 <div className="sm:ml-3 lg:ml-4">
-                  <p className="text-[10px] sm:text-xs lg:text-sm font-medium text-gray-600">Pendentes</p>
+                  <p className="text-[10px] sm:text-xs lg:text-sm font-medium text-neutral-600">Pendentes</p>
                   <p className="text-lg sm:text-xl lg:text-2xl font-bold">{users.filter(u => !u.isApproved).length}</p>
                 </div>
               </div>
@@ -396,7 +396,7 @@ const AdminPanel = () => {
               <div className="flex flex-col sm:flex-row items-start sm:items-center">
                 <Shield className="h-6 w-6 sm:h-7 sm:w-7 lg:h-8 lg:w-8 text-purple-600 mb-2 sm:mb-0" />
                 <div className="sm:ml-3 lg:ml-4">
-                  <p className="text-[10px] sm:text-xs lg:text-sm font-medium text-gray-600">Admins</p>
+                  <p className="text-[10px] sm:text-xs lg:text-sm font-medium text-neutral-600">Admins</p>
                   <p className="text-lg sm:text-xl lg:text-2xl font-bold">{users.filter(u => u.isAdmin).length}</p>
                 </div>
               </div>
@@ -408,7 +408,7 @@ const AdminPanel = () => {
               <div className="flex flex-col sm:flex-row items-start sm:items-center">
                 <Ban className="h-6 w-6 sm:h-7 sm:w-7 lg:h-8 lg:w-8 text-red-600 mb-2 sm:mb-0" />
                 <div className="sm:ml-3 lg:ml-4">
-                  <p className="text-[10px] sm:text-xs lg:text-sm font-medium text-gray-600">Inativos</p>
+                  <p className="text-[10px] sm:text-xs lg:text-sm font-medium text-neutral-600">Inativos</p>
                   <p className="text-lg sm:text-xl lg:text-2xl font-bold">{users.filter(u => !u.isActive).length}</p>
                 </div>
               </div>
@@ -483,7 +483,7 @@ const AdminPanel = () => {
               
               <TabsContent value="pending" className="space-y-2 sm:space-y-3 lg:space-y-4 mt-3 sm:mt-4">
                 {pendingUsers.length === 0 ? (
-                  <p className="text-center text-gray-500 py-6 sm:py-8 text-sm">
+                  <p className="text-center text-neutral-500 py-6 sm:py-8 text-sm">
                     Nenhum usuário pendente de aprovação
                   </p>
                 ) : (
@@ -493,7 +493,7 @@ const AdminPanel = () => {
                         <div className="flex flex-col sm:flex-row items-start sm:items-center sm:justify-between gap-3">
                           <div className="flex-1 min-w-0">
                             <h3 className="font-semibold text-sm sm:text-base truncate">{user.name}</h3>
-                            <p className="text-xs sm:text-sm text-gray-600 truncate">{user.email}</p>
+                            <p className="text-xs sm:text-sm text-neutral-600 truncate">{user.email}</p>
                             {user.phone && (
                               <a
                                 href={`https://wa.me/55${user.phone}`}
@@ -505,7 +505,7 @@ const AdminPanel = () => {
                                 {user.phone.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3')}
                               </a>
                             )}
-                            <p className="text-[10px] sm:text-xs text-gray-500">
+                            <p className="text-[10px] sm:text-xs text-neutral-500">
                               Cadastrado: {new Date(user.createdAt).toLocaleDateString('pt-BR')}
                             </p>
                           </div>
@@ -538,7 +538,7 @@ const AdminPanel = () => {
               
               <TabsContent value="approved" className="space-y-2 sm:space-y-3 lg:space-y-4 mt-3 sm:mt-4">
                 {approvedUsers.filter(u => !u.isAdmin && u.isActive).length === 0 ? (
-                  <p className="text-center text-gray-500 py-6 sm:py-8 text-sm">
+                  <p className="text-center text-neutral-500 py-6 sm:py-8 text-sm">
                     Nenhum usuário aprovado ativo
                   </p>
                 ) : (
@@ -548,7 +548,7 @@ const AdminPanel = () => {
                         <div className="flex flex-col gap-3">
                           <div className="flex-1 min-w-0">
                             <h3 className="font-semibold text-sm sm:text-base truncate">{user.name}</h3>
-                            <p className="text-xs sm:text-sm text-gray-600 truncate">{user.email}</p>
+                            <p className="text-xs sm:text-sm text-neutral-600 truncate">{user.email}</p>
                             {user.phone && (
                               <a
                                 href={`https://wa.me/55${user.phone}`}
@@ -560,7 +560,7 @@ const AdminPanel = () => {
                                 {user.phone.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3')}
                               </a>
                             )}
-                            <p className="text-[10px] sm:text-xs text-gray-500">
+                            <p className="text-[10px] sm:text-xs text-neutral-500">
                               Aprovado: {new Date(user.updatedAt).toLocaleDateString('pt-BR')}
                             </p>
                           </div>
@@ -573,7 +573,7 @@ const AdminPanel = () => {
                               size="sm"
                               variant="outline"
                               onClick={() => navigate(`/admin/users/${user.id}/sessions`)}
-                              className="border-blue-600 text-blue-600 hover:bg-blue-50 h-7 sm:h-8 text-xs sm:text-sm"
+                              className="border-primary text-primary hover:bg-blue-50 h-7 sm:h-8 text-xs sm:text-sm"
                             >
                               <Smartphone className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-1" />
                               <span className="hidden sm:inline">Dispositivos</span>
@@ -582,7 +582,7 @@ const AdminPanel = () => {
                               size="sm"
                               variant="outline"
                               onClick={() => handleOpenEditIps(user)}
-                              className="border-gray-600 text-gray-600 hover:bg-gray-50 h-7 sm:h-8 text-xs sm:text-sm"
+                              className="border-neutral-600 text-neutral-600 hover:bg-neutral-50 h-7 sm:h-8 text-xs sm:text-sm"
                             >
                               <Settings className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-1" />
                               <span className="hidden sm:inline">IPs</span>
@@ -673,7 +673,7 @@ const AdminPanel = () => {
                       <div className="flex flex-col gap-3">
                         <div className="flex-1 min-w-0">
                           <h3 className="font-semibold text-sm sm:text-base truncate">{admin.name}</h3>
-                          <p className="text-xs sm:text-sm text-gray-600 truncate">{admin.email}</p>
+                          <p className="text-xs sm:text-sm text-neutral-600 truncate">{admin.email}</p>
                           {admin.phone && (
                             <a
                               href={`https://wa.me/55${admin.phone}`}
@@ -685,7 +685,7 @@ const AdminPanel = () => {
                               {admin.phone.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3')}
                             </a>
                           )}
-                          <p className="text-[10px] sm:text-xs text-gray-500">
+                          <p className="text-[10px] sm:text-xs text-neutral-500">
                             Admin desde: {new Date(admin.updatedAt).toLocaleDateString('pt-BR')}
                           </p>
                         </div>
@@ -698,7 +698,7 @@ const AdminPanel = () => {
                             size="sm"
                             variant="outline"
                             onClick={() => navigate(`/admin/users/${admin.id}/sessions`)}
-                            className="border-blue-600 text-blue-600 hover:bg-blue-50 h-7 sm:h-8 text-xs sm:text-sm"
+                            className="border-primary text-primary hover:bg-blue-50 h-7 sm:h-8 text-xs sm:text-sm"
                           >
                             <Smartphone className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-1" />
                             <span className="hidden sm:inline">Dispositivos</span>
@@ -707,7 +707,7 @@ const AdminPanel = () => {
                             size="sm"
                             variant="outline"
                             onClick={() => handleOpenEditIps(admin)}
-                            className="border-gray-600 text-gray-600 hover:bg-gray-50 h-7 sm:h-8 text-xs sm:text-sm"
+                            className="border-neutral-600 text-neutral-600 hover:bg-neutral-50 h-7 sm:h-8 text-xs sm:text-sm"
                           >
                             <Settings className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-1" />
                             <span className="hidden sm:inline">IPs</span>
@@ -796,7 +796,7 @@ const AdminPanel = () => {
 
               <TabsContent value="inactive" className="space-y-2 sm:space-y-3 lg:space-y-4 mt-3 sm:mt-4">
                 {inactiveUsers.length === 0 ? (
-                  <p className="text-center text-gray-500 py-6 sm:py-8 text-sm">
+                  <p className="text-center text-neutral-500 py-6 sm:py-8 text-sm">
                     Nenhum usuário inativo
                   </p>
                 ) : (
@@ -805,8 +805,8 @@ const AdminPanel = () => {
                       <CardContent className="pt-3 sm:pt-4 lg:pt-6 p-3 sm:p-4 lg:p-6">
                         <div className="flex flex-col gap-3">
                           <div className="flex-1 min-w-0">
-                            <h3 className="font-semibold text-gray-900 text-sm sm:text-base truncate">{user.name}</h3>
-                            <p className="text-xs sm:text-sm text-gray-600 truncate">{user.email}</p>
+                            <h3 className="font-semibold text-neutral-900 text-sm sm:text-base truncate">{user.name}</h3>
+                            <p className="text-xs sm:text-sm text-neutral-600 truncate">{user.email}</p>
                             {user.phone && (
                               <a
                                 href={`https://wa.me/55${user.phone}`}
@@ -825,7 +825,7 @@ const AdminPanel = () => {
                                   Admin
                                 </Badge>
                               )}
-                              <p className="text-[10px] sm:text-xs text-gray-500">
+                              <p className="text-[10px] sm:text-xs text-neutral-500">
                                 Inativado: {new Date(user.updatedAt).toLocaleDateString('pt-BR')}
                               </p>
                             </div>
@@ -839,7 +839,7 @@ const AdminPanel = () => {
                               size="sm"
                               variant="outline"
                               onClick={() => navigate(`/admin/users/${user.id}/sessions`)}
-                              className="border-blue-600 text-blue-600 hover:bg-blue-50 h-7 sm:h-8 text-xs sm:text-sm"
+                              className="border-primary text-primary hover:bg-blue-50 h-7 sm:h-8 text-xs sm:text-sm"
                             >
                               <Smartphone className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-1" />
                               <span className="hidden sm:inline">Dispositivos</span>
@@ -848,7 +848,7 @@ const AdminPanel = () => {
                               size="sm"
                               variant="outline"
                               onClick={() => handleOpenEditIps(user)}
-                              className="border-gray-600 text-gray-600 hover:bg-gray-50 h-7 sm:h-8 text-xs sm:text-sm"
+                              className="border-neutral-600 text-neutral-600 hover:bg-neutral-50 h-7 sm:h-8 text-xs sm:text-sm"
                             >
                               <Settings className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-1" />
                               <span className="hidden sm:inline">IPs</span>
@@ -947,7 +947,7 @@ const AdminPanel = () => {
                 </div>
 
                 {partners.length === 0 ? (
-                  <p className="text-center text-gray-500 py-8 text-sm">
+                  <p className="text-center text-neutral-500 py-8 text-sm">
                     Nenhum parceiro cadastrado
                   </p>
                 ) : (
@@ -956,7 +956,7 @@ const AdminPanel = () => {
                       <Card key={partner.id}>
                         <CardContent className="p-4">
                           <div className="flex flex-col sm:flex-row gap-4">
-                            <div className="w-full sm:w-32 h-32 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
+                            <div className="w-full sm:w-32 h-32 bg-neutral-100 rounded-lg overflow-hidden flex-shrink-0">
                               {partner.imageUrl ? (
                                 <img
                                   src={partner.imageUrl}
@@ -964,7 +964,7 @@ const AdminPanel = () => {
                                   className="w-full h-full object-cover"
                                 />
                               ) : (
-                                <div className="w-full h-full flex items-center justify-center text-gray-400">
+                                <div className="w-full h-full flex items-center justify-center text-neutral-400">
                                   <Image className="h-8 w-8" />
                                 </div>
                               )}
@@ -978,7 +978,7 @@ const AdminPanel = () => {
                                     <Badge variant={partner.isActive ? "default" : "secondary"}>
                                       {partner.isActive ? 'Ativo' : 'Inativo'}
                                     </Badge>
-                                    <span className="text-xs text-gray-500">
+                                    <span className="text-xs text-neutral-500">
                                       Ordem: {partner.displayOrder}
                                     </span>
                                   </div>
@@ -1021,7 +1021,7 @@ const AdminPanel = () => {
                               </div>
 
                               <div className="space-y-1 text-sm">
-                                <div className="flex items-center gap-2 text-gray-600">
+                                <div className="flex items-center gap-2 text-neutral-600">
                                   <ExternalLink className="h-3 w-3" />
                                   <a
                                     href={partner.redirectUrl}
@@ -1033,7 +1033,7 @@ const AdminPanel = () => {
                                   </a>
                                 </div>
                                 {(partner.startDate || partner.endDate) && (
-                                  <div className="text-xs text-gray-500">
+                                  <div className="text-xs text-neutral-500">
                                     {partner.startDate && `Início: ${new Date(partner.startDate).toLocaleDateString('pt-BR')}`}
                                     {partner.startDate && partner.endDate && ' - '}
                                     {partner.endDate && `Fim: ${new Date(partner.endDate).toLocaleDateString('pt-BR')}`}
@@ -1083,7 +1083,7 @@ const AdminPanel = () => {
                 placeholder="https://exemplo.com/imagem.jpg"
               />
               {partnerFormData.imageUrl && (
-                <div className="mt-2 w-full h-32 bg-gray-100 rounded-lg overflow-hidden">
+                <div className="mt-2 w-full h-32 bg-neutral-100 rounded-lg overflow-hidden">
                   <img
                     src={partnerFormData.imageUrl}
                     alt="Preview"

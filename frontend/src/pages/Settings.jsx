@@ -301,10 +301,10 @@ const Settings = () => {
 
   if (authLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8 flex items-center justify-center">
+      <div className="min-h-screen bg-neutral-50 dark:bg-neutral-900 py-8 flex items-center justify-center">
         <div className="text-center">
-          <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-blue-600" />
-          <p className="text-gray-600 dark:text-gray-300">Carregando...</p>
+          <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-primary" />
+          <p className="text-neutral-600 dark:text-neutral-300">Carregando...</p>
         </div>
       </div>
     );
@@ -315,14 +315,14 @@ const Settings = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
+    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-900 py-8">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-3xl font-bold text-neutral-900 dark:text-white">
             Configurações do Sistema
           </h1>
-          <p className="mt-2 text-gray-600 dark:text-gray-400">
+          <p className="mt-2 text-neutral-600 dark:text-neutral-400">
             Gerencie as configurações de integração com serviços externos
           </p>
         </div>
@@ -402,7 +402,7 @@ const Settings = () => {
                   <button
                     type="button"
                     onClick={() => setShowInstanceId(!showInstanceId)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-600"
                   >
                     {showInstanceId ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </button>
@@ -426,7 +426,7 @@ const Settings = () => {
                   <button
                     type="button"
                     onClick={() => setShowToken(!showToken)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-600"
                   >
                     {showToken ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </button>
@@ -445,13 +445,13 @@ const Settings = () => {
                   value={formData.baseUrl}
                   onChange={handleInputChange}
                 />
-                <p className="text-xs text-gray-500 dark:text-gray-400">
+                <p className="text-xs text-neutral-500 dark:text-neutral-400">
                   Deixe como padrão a menos que esteja usando um servidor personalizado
                 </p>
               </div>
             </div>
 
-            <div className="flex flex-wrap gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
+            <div className="flex flex-wrap gap-3 pt-4 border-t border-neutral-200 dark:border-neutral-700">
               <Button
                 onClick={handleSave}
                 disabled={loading || checking}
@@ -500,7 +500,7 @@ const Settings = () => {
           <CardHeader>
             <div className="flex items-center gap-3">
               <div className="p-2 bg-blue-500/10 rounded-lg">
-                <Mail className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+                <Mail className="h-6 w-6 text-primary dark:text-blue-400" />
               </div>
               <div>
                 <CardTitle>Configuração Mailjet (Email)</CardTitle>
@@ -530,7 +530,7 @@ const Settings = () => {
                   <button
                     type="button"
                     onClick={() => setShowMailjetApiKey(!showMailjetApiKey)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-600"
                   >
                     {showMailjetApiKey ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </button>
@@ -554,7 +554,7 @@ const Settings = () => {
                   <button
                     type="button"
                     onClick={() => setShowMailjetSecret(!showMailjetSecret)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-600"
                   >
                     {showMailjetSecret ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </button>
@@ -573,7 +573,7 @@ const Settings = () => {
                   value={mailjetFormData.senderEmail}
                   onChange={handleMailjetInputChange}
                 />
-                <p className="text-xs text-gray-500 dark:text-gray-400">
+                <p className="text-xs text-neutral-500 dark:text-neutral-400">
                   Deve ser um email verificado no Mailjet
                 </p>
               </div>
@@ -593,7 +593,7 @@ const Settings = () => {
               </div>
             </div>
 
-            <div className="flex flex-wrap gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
+            <div className="flex flex-wrap gap-3 pt-4 border-t border-neutral-200 dark:border-neutral-700">
               <Button
                 onClick={handleMailjetSave}
                 disabled={mailjetLoading}
@@ -659,7 +659,7 @@ const Settings = () => {
                   <button
                     type="button"
                     onClick={() => setShowR2AccessKey(!showR2AccessKey)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 hover:text-neutral-700"
                   >
                     {showR2AccessKey ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </button>
@@ -680,13 +680,13 @@ const Settings = () => {
                   <button
                     type="button"
                     onClick={() => setShowR2SecretKey(!showR2SecretKey)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 hover:text-neutral-700"
                   >
                     {showR2SecretKey ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </button>
                 </div>
-                <p className="text-xs text-gray-500">
-                  Credenciais S3 geradas em R2 > Manage R2 API Tokens
+                <p className="text-xs text-neutral-500">
+                  {"Credenciais S3 geradas em R2 > Manage R2 API Tokens"}
                 </p>
               </div>
 
@@ -708,13 +708,13 @@ const Settings = () => {
                   value={r2FormData.r2PublicUrl}
                   onChange={(e) => setR2FormData({ ...r2FormData, r2PublicUrl: e.target.value })}
                 />
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-neutral-500">
                   URL customizada se você configurou um domínio próprio para o R2
                 </p>
               </div>
             </div>
 
-            <div className="flex gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
+            <div className="flex gap-3 pt-4 border-t border-neutral-200 dark:border-neutral-700">
               <Button
                 onClick={handleSaveR2Settings}
                 disabled={r2Loading}
@@ -747,7 +747,7 @@ const Settings = () => {
           <CardContent className="space-y-6">
             {templatesLoading ? (
               <div className="flex items-center justify-center py-8">
-                <Loader2 className="h-6 w-6 animate-spin text-gray-400" />
+                <Loader2 className="h-6 w-6 animate-spin text-neutral-400" />
               </div>
             ) : (
               <>
@@ -766,22 +766,22 @@ const Settings = () => {
                       className="resize-none"
                     />
                     <div className="space-y-1">
-                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                      <p className="text-xs text-neutral-500 dark:text-neutral-400">
                         Mensagem enviada automaticamente após o cadastro de novos usuários.
                       </p>
-                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                      <p className="text-xs text-neutral-500 dark:text-neutral-400">
                         <strong>Variáveis disponíveis:</strong>
                       </p>
-                      <ul className="text-xs text-gray-500 dark:text-gray-400 list-disc list-inside ml-2">
-                        <li><code className="bg-gray-100 dark:bg-gray-800 px-1 rounded">[primeiro-nome]</code> → Primeiro nome do usuário</li>
-                        <li><code className="bg-gray-100 dark:bg-gray-800 px-1 rounded">[nome-completo]</code> → Nome completo do usuário</li>
-                        <li><code className="bg-gray-100 dark:bg-gray-800 px-1 rounded">[e-mail]</code> → E-mail cadastrado pelo usuário</li>
+                      <ul className="text-xs text-neutral-500 dark:text-neutral-400 list-disc list-inside ml-2">
+                        <li><code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">[primeiro-nome]</code> → Primeiro nome do usuário</li>
+                        <li><code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">[nome-completo]</code> → Nome completo do usuário</li>
+                        <li><code className="bg-neutral-100 dark:bg-neutral-800 px-1 rounded">[e-mail]</code> → E-mail cadastrado pelo usuário</li>
                       </ul>
                     </div>
                   </div>
                 </div>
 
-                <div className="flex flex-wrap gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
+                <div className="flex flex-wrap gap-3 pt-4 border-t border-neutral-200 dark:border-neutral-700">
                   <Button
                     onClick={handleSaveTemplates}
                     disabled={templatesSaving}
@@ -819,7 +819,7 @@ const Settings = () => {
                   onChange={(e) => setTestPhone(e.target.value)}
                   disabled={sendingTest}
                 />
-                <p className="text-xs text-gray-500 dark:text-gray-400">
+                <p className="text-xs text-neutral-500 dark:text-neutral-400">
                   Digite apenas números com DDD (ex: 11999999999)
                 </p>
               </div>

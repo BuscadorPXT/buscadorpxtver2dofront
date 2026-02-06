@@ -89,7 +89,7 @@ const AdminSupplierAnalytics = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
+    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950">
       <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 py-4 sm:py-6 lg:py-8">
         
         <div className="mb-4 sm:mb-6">
@@ -100,10 +100,10 @@ const AdminSupplierAnalytics = () => {
             </Link>
           </Button>
           
-          <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-1 sm:mb-2">
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-neutral-900 mb-1 sm:mb-2">
             Analytics de Fornecedores
           </h1>
-          <p className="text-sm sm:text-base text-gray-600">
+          <p className="text-sm sm:text-base text-neutral-600">
             Análise de cliques em links de WhatsApp dos fornecedores
           </p>
         </div>
@@ -202,7 +202,7 @@ const AdminSupplierAnalytics = () => {
                   <Loader2 className="h-8 w-8 animate-spin" />
                 </div>
               ) : supplierMetrics.length === 0 ? (
-                <div className="text-center py-8 text-gray-500">
+                <div className="text-center py-8 text-neutral-500">
                   Nenhum dado disponível para o período selecionado
                 </div>
               ) : (
@@ -213,7 +213,7 @@ const AdminSupplierAnalytics = () => {
                       className={`flex items-center justify-between p-3 rounded-lg border cursor-pointer transition-colors ${
                         selectedSupplier === supplier.supplierId
                           ? 'bg-blue-50 border-blue-300'
-                          : 'hover:bg-gray-50'
+                          : 'hover:bg-neutral-50'
                       }`}
                       onClick={() => handleSupplierSelect(supplier.supplierId)}
                     >
@@ -223,14 +223,14 @@ const AdminSupplierAnalytics = () => {
                         </div>
                         <div>
                           <div className="font-semibold">{supplier.suppliername}</div>
-                          <div className="text-xs text-gray-500">
+                          <div className="text-xs text-neutral-500">
                             {supplier.uniqueusers} usuários únicos
                           </div>
                         </div>
                       </div>
                       <div className="text-right">
                         <div className="font-bold text-lg">{supplier.totalclicks}</div>
-                        <div className="text-xs text-gray-500">cliques</div>
+                        <div className="text-xs text-neutral-500">cliques</div>
                       </div>
                     </div>
                   ))}
@@ -250,12 +250,12 @@ const AdminSupplierAnalytics = () => {
             </CardHeader>
             <CardContent>
               {!selectedSupplier ? (
-                <div className="flex flex-col items-center justify-center py-12 text-gray-500">
-                  <Package className="h-12 w-12 mb-4 text-gray-400" />
+                <div className="flex flex-col items-center justify-center py-12 text-neutral-500">
+                  <Package className="h-12 w-12 mb-4 text-neutral-400" />
                   <p className="text-center">Selecione um fornecedor no ranking ao lado</p>
                 </div>
               ) : topProducts.length === 0 ? (
-                <div className="text-center py-8 text-gray-500">
+                <div className="text-center py-8 text-neutral-500">
                   Nenhum produto com cliques neste período
                 </div>
               ) : (
@@ -263,20 +263,20 @@ const AdminSupplierAnalytics = () => {
                   {topProducts.map((product, index) => (
                     <div
                       key={product.productid}
-                      className="flex items-center justify-between p-3 rounded-lg border hover:bg-gray-50 transition-colors"
+                      className="flex items-center justify-between p-3 rounded-lg border hover:bg-neutral-50 transition-colors"
                     >
                       <div className="flex items-center gap-3 flex-1 min-w-0">
-                        <div className="flex items-center justify-center w-6 h-6 rounded-full bg-gray-200 text-gray-700 font-semibold text-xs flex-shrink-0">
+                        <div className="flex items-center justify-center w-6 h-6 rounded-full bg-neutral-200 text-neutral-700 font-semibold text-xs flex-shrink-0">
                           {index + 1}
                         </div>
                         <div className="min-w-0 flex-1">
                           <div className="font-medium truncate">{product.productname}</div>
-                          <div className="text-xs text-gray-500">{product.productcode}</div>
+                          <div className="text-xs text-neutral-500">{product.productcode}</div>
                         </div>
                       </div>
                       <div className="text-right flex-shrink-0 ml-2">
                         <div className="font-bold">{product.totalclicks}</div>
-                        <div className="text-xs text-gray-500">{product.uniqueusers} usuários</div>
+                        <div className="text-xs text-neutral-500">{product.uniqueusers} usuários</div>
                       </div>
                     </div>
                   ))}

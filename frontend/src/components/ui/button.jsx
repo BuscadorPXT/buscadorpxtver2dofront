@@ -20,12 +20,27 @@ const buttonVariants = cva(
         ghost:
           "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
         link: "text-primary underline-offset-4 hover:underline",
+        accent: "btn-variant-accent",
+        accentOutline: "btn-variant-accent-outline",
+        accentGhost: "btn-variant-accent-ghost",
+        accentSubtle: "btn-variant-accent-subtle",
+        lime:
+          "bg-lime-500 text-white shadow-lg hover:bg-lime-600 focus-visible:ring-lime-500/30",
+        limeOutline:
+          "border border-lime-500 text-lime-700 hover:bg-lime-50 dark:text-lime-400 dark:hover:bg-lime-950/30",
+        limeGhost:
+          "text-lime-700 hover:bg-lime-50 dark:text-lime-400 dark:hover:bg-lime-950/30",
+        limeSubtle:
+          "bg-lime-50 text-lime-700 hover:bg-lime-100 dark:bg-lime-950/30 dark:text-lime-400 dark:hover:bg-lime-950/50",
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
         sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
         lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
         icon: "size-9",
+        pill: "h-11 px-8 rounded-full",
+        pillSm: "h-9 px-6 rounded-full text-sm",
+        pillLg: "h-12 px-10 rounded-full text-base",
       },
     },
     defaultVariants: {

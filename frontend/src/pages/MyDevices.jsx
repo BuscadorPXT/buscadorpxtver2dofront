@@ -53,7 +53,7 @@ export default function MyDevices() {
         return (
             <div className="max-w-4xl mx-auto p-6">
                 <div className="flex items-center justify-center h-64">
-                    <RefreshCw className="w-8 h-8 animate-spin text-gray-600" />
+                    <RefreshCw className="w-8 h-8 animate-spin text-neutral-600" />
                 </div>
             </div>
         );
@@ -64,10 +64,10 @@ export default function MyDevices() {
 
             <div className="mb-8">
                 <div className="flex items-center space-x-3 mb-2">
-                    <Smartphone className="w-8 h-8 text-gray-900 dark:text-gray-100" />
-                    <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Meus Dispositivos</h1>
+                    <Smartphone className="w-8 h-8 text-neutral-900 dark:text-neutral-100" />
+                    <h1 className="text-3xl font-bold text-neutral-900 dark:text-neutral-100">Meus Dispositivos</h1>
                 </div>
-                <p className="text-gray-600 dark:text-gray-400">
+                <p className="text-neutral-600 dark:text-neutral-400">
                     Gerencie os dispositivos conectados à sua conta. Você pode desconectar dispositivos que não
                     reconhece ou que não está mais usando.
                 </p>
@@ -83,18 +83,18 @@ export default function MyDevices() {
                 </div>
             )}
 
-            <div className="mb-6 p-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg">
+            <div className="mb-6 p-4 bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-lg">
                 <div className="flex items-center justify-between">
                     <div>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">Dispositivos conectados</p>
-                        <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">{sessions.length}</p>
+                        <p className="text-sm text-neutral-600 dark:text-neutral-400">Dispositivos conectados</p>
+                        <p className="text-2xl font-bold text-neutral-900 dark:text-neutral-100">{sessions.length}</p>
                     </div>
                     <button
                         onClick={loadSessions}
-                        className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                        className="p-2 hover:bg-neutral-100 dark:hover:bg-neutral-700 rounded-lg transition-colors"
                         title="Atualizar"
                     >
-                        <RefreshCw className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+                        <RefreshCw className="w-5 h-5 text-neutral-600 dark:text-neutral-400" />
                     </button>
                 </div>
             </div>
@@ -114,9 +114,9 @@ export default function MyDevices() {
 
             <div className="space-y-4">
                 {sessions.length === 0 ? (
-                    <div className="text-center py-12 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
-                        <Smartphone className="w-16 h-16 text-gray-400 dark:text-gray-500 mx-auto mb-4" />
-                        <p className="text-gray-600 dark:text-gray-400">Nenhum dispositivo conectado</p>
+                    <div className="text-center py-12 bg-neutral-50 dark:bg-neutral-800 rounded-lg border border-neutral-200 dark:border-neutral-700">
+                        <Smartphone className="w-16 h-16 text-neutral-400 dark:text-neutral-500 mx-auto mb-4" />
+                        <p className="text-neutral-600 dark:text-neutral-400">Nenhum dispositivo conectado</p>
                     </div>
                 ) : (
                     sessions.map((session) => (
@@ -130,9 +130,9 @@ export default function MyDevices() {
                 )}
             </div>
 
-            <div className="mt-8 p-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg">
-                <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">Sobre os dispositivos</h3>
-                <ul className="text-sm text-gray-600 dark:text-gray-400 space-y-1">
+            <div className="mt-8 p-4 bg-neutral-50 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-lg">
+                <h3 className="font-semibold text-neutral-900 dark:text-neutral-100 mb-2">Sobre os dispositivos</h3>
+                <ul className="text-sm text-neutral-600 dark:text-neutral-400 space-y-1">
                     <li>• Cada dispositivo é identificado pelo seu endereço IP</li>
                     <li>• Desconectar um dispositivo força o logout naquele aparelho</li>
                     <li>• A última atividade é atualizada automaticamente quando você usa o sistema</li>
